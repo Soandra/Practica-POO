@@ -1,4 +1,4 @@
-from cuenta import Cuenta
+from gestorAplicacion.usuario.cuenta import Cuenta
 
 class CuentaCorriente(Cuenta):
      def __int__(self, titular, saldo):

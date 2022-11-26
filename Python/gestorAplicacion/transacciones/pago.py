@@ -1,5 +1,4 @@
 from datetime import datetime as dt
-from gestorAplicacion.usuario import cuenta
 from multa import Multa
 import random
 
@@ -71,7 +70,7 @@ class Pago:
 
         if (cuotas == self.tipo_clase.cuotasDePago):
             self.tipo_clase.saldarPrestamo()
-            return f"Su deuda ha sido saldada\nNuevo saldo: {cuenta.getSaldoDisponible()}"
+            return f"Su deuda ha sido saldada\nNuevo saldo: {self.cuenta.getSaldoDisponible()}"
 
         else :
             self.tipo_clase.saldarCuota(cuotas)
@@ -85,7 +84,7 @@ class Pago:
 
     def setFecha(self, fecha): self.fecha = fecha
 
-    def getCuenta(self):return cuenta
+    def getCuenta(self):return self.cuenta
 
     def setCuenta(self, cuenta):self.cuenta = cuenta
 
