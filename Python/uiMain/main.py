@@ -1,4 +1,6 @@
+from UIPrestamo import *
 from Python.gestorAplicacion.usuario.cliente import Cliente
+
 def traerCuentas():
     for i in cliente.listaCuentas:
         print(i)
@@ -13,7 +15,7 @@ def traerMultas(idCuenta):
     for multa in cuenta.getMultas():
         if multa.isEstado():
             print(multa)
-            
+
 def traerPrestamos(idCuenta):
     cuenta = cliente.buscarCuenta(idCuenta)
     for prestamo in cuenta.getPrestamos():
@@ -36,7 +38,7 @@ if __name__ == "__main__":
         opcion = int(input("Ingrese una opción: "))
 
         if opcion == 1:
-            pass
+            prestamo(cliente)
         elif opcion == 2:
             pass
         elif opcion == 3:
