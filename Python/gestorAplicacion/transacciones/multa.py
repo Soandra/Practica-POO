@@ -1,5 +1,5 @@
 from datetime import datetime as dt
-from gestorAplicacion.usuario import cuenta
+from Python.gestorAplicacion.usuario.cuenta import Cuenta
 
 class Multa :
 

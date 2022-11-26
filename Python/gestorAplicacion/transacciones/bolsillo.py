@@ -1,5 +1,5 @@
 
-from gestorAplicacion.usuario import cuenta
+from Python.gestorAplicacion.usuario.cuenta import Cuenta
 
 class Bolsillo():
     Categoria = ["VIAJES", "EDUCACION", "SALUD", "ALIMENTACION", "TRANSPORTE", "HOGAR", "IMPREVISTOS", "OTROS"]
@@ -35,7 +35,7 @@ class Bolsillo():
         if(self.cuenta.getSaldoDisponible()<valor):
             return "No tienes saldo suficiente en la cuenta para cargar el bolsillo"
         
-        elif(cuenta.misBolsillos.isEmpty()):
+        elif(self.cuenta.misBolsillos.isEmpty()):
             return "No existe un bolsillo, por favor cree uno"
         
         elif(valor+self.valorCargaBolsillo == self.metaAhorro):

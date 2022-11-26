@@ -15,7 +15,7 @@ class Pago:
 
     
     # Este metodo filtra los pagos de prestamos y le añade los pagos de multas
-    def separarPagos():
+    def separarPagos(self):
         multas = []
         prestamos = []
         for pago in Pago.pagos:
