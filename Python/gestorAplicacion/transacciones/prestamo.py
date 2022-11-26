@@ -115,7 +115,7 @@ class Prestamo:
                f"La cuota a pagar será de {self.valorCuota}" \
                f"para una deuda total de {self.cuenta.getDeuda()}"
 
-    def _str_(self):
+    def __str__(self):
         return self.getId() + ": Prestamo con una deuda pendiente de " + self.cuenta.getDeuda() + " de tipo " + self.tipoPrestamo + " La cuota a pagar es " + self.valorCuota;
 
 
