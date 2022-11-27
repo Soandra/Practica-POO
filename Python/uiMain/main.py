@@ -1,30 +1,34 @@
-
 from Python.gestorAplicacion.usuario.cliente import Cliente
-from UIPrestamo import *
-from UIPago import *
-from UIBolsillos import *
+from Python.uiMain.UIPago import UIPago
+from Python.uiMain.UIPrestamo import UIPrestamo
+
 
 class Main:
-    def traerCuentas(self):
-        for i in cliente.listaCuentas:
+    @classmethod
+    def traerCuentas(cls):
+        for i in Cliente.listaCuentas:
             print(i)
 
-    def traerBolsillos(idCuenta):
-        cuenta = cliente.buscarCuenta(idCuenta)
+    @classmethod
+    def traerBolsillos(cls, idCuenta):
+        cuenta = Cliente.buscarCuenta(idCuenta)
         for bolsillo in cuenta.misBolsillos:
             print(bolsillo.__str__())
 
-    def traerMultas(idCuenta):
-        cuenta = cliente.buscarCuenta(idCuenta)
+    @classmethod
+    def traerMultas(cls, idCuenta):
+        cuenta = Cliente.buscarCuenta(idCuenta)
         for multa in cuenta.getMultas():
             if multa.isEstado():
                 print(multa)
 
-    def traerPrestamos(idCuenta):
-        cuenta = cliente.buscarCuenta(idCuenta)
+    @classmethod
+    def traerPrestamos(cls, idCuenta):
+        cuenta = Cliente.buscarCuenta(idCuenta)
         for prestamo in cuenta.getPrestamos():
             if prestamo.isEstado():
                 print(prestamo)
+
 
 if __name__ == "__main__":
     cliente = Cliente("Jaimito", 20192121)
@@ -46,7 +50,8 @@ if __name__ == "__main__":
         elif opcion == 2:
             UIPago.pago(cliente)
         elif opcion == 3:
-            UIBolsillos.bolsillo(cliente)
+            #UIBolsillos.bolsillo(cliente)
+            pass
         elif opcion == 4:
             pass
         elif opcion == 5:
@@ -56,8 +61,3 @@ if __name__ == "__main__":
             break
         else:
             print("Por favor ingrese una opción valida")
-
-
-
-
-

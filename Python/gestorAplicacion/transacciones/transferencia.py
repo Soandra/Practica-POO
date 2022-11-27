@@ -14,7 +14,7 @@ class Transferencia:
 		Transferencia.lista.append(self)
 		pass
 
-	def enviarDinero(self) :
+	def enviarDinero(self):
 		
 		if (self.cuentaOrigen.isEstado()==False):
 			return "cuenta inactiva"
@@ -26,11 +26,9 @@ class Transferencia:
 		self.cuentaFinal.aumentarSaldo(self.valor)
 		self.cuentaOrigen.setSaldoDisponible(self.cuentaOrigen.getSaldoDisponible() - self.valor)
 		self.cuentaFinal.setSaldoDisponible(self.cuentaFinal.getSaldoDisponible() + self.valor)
-		
 		return "Su transferencia fue exitosa con un valor de:"+self.valor
 	
 	def __str__(self) :
-
 		return  f"Transferencia {self.getId()}:\
 				se realizo: {self.getFecha()}\
 				desde: {self.getCuentaOrigen().getId()}\
@@ -40,6 +38,7 @@ class Transferencia:
 	
 	@classmethod
 	def getId(cls) :return  Transferencia.id
+
 	@classmethod
 	def setId(cls, id): Transferencia.id = id
 
@@ -59,6 +58,7 @@ class Transferencia:
 
 	def setValor(self, valor): self.valor = valor
 
-	def getLista(self): return self.ista
-
-	def setLista(self, lista): self.lista = lista
+	@classmethod
+	def getLista(cls): return Transferencia.lista
+	@classmethod
+	def setLista(cls, lista): Transferencia.lista = lista

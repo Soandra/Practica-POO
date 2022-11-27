@@ -1,85 +1,84 @@
-from main import *
-from gestorAplicacion.transacciones.bolsillo import Bolsillo
-class UIBolsillos:
+from Python.gestorAplicacion.transacciones.bolsillo import Bolsillo
+from Python.gestorAplicacion.usuario.cliente import Cliente
+from Python.uiMain.main import Main
 
+
+class UIBolsillos:
     @classmethod
     def bolsillo(cls, cliente):
         print("Selecciona una de las opciones disponibles para bolsillos")
         print("""
-            1. Generar Bolsillo
-            2. Cargar Bolsillo
-            3. Descargar Bolsillo""")
-        opcionBolsillos=int(input())
-        if( opcionBolsillos < 1 or opcionBolsillos >3):
+        1. Generar Bolsillo
+        2. Cargar Bolsillo
+        3. Descargar Bolsillo""")
+
+        opcionBolsillos = int(input())
+        if(opcionBolsillos < 1 or opcionBolsillos > 3):
             print("Opción no valida")
             return
-        
 
         Main.traerCuentas()
         print("Selecciona la cuenta para generar el ahorro")
         cuenta = int(input())
-        if(cuenta < len(cliente.listaCuentas)) :
-            if (opcionBolsillos == 1):
+        if cuenta < len(Cliente.listaCuentas):
+            if opcionBolsillos == 1:
                 print("Cuánto deseas ahorrar en este bolsillo")
-                valorAhorro =int(input())
-                print("Ingresa el número correspondiente al tipo de bolsillo que quieres generar")
+                valorAhorro = int(input())
+                print("Ingresa el número correspondiente al tipo de bolsillo que deseas generar")
                 print("""
-                    0. VIAJES          1. EDUCACION     2. SALUD
-                    3  ALIMENTACION    4  TRANSPORTE    5  HOGAR
-                    6  IMPREVISTOS     7  OTROS """)
+                0. VIAJES          1. EDUCACION     2. SALUD
+                3  ALIMENTACION    4  TRANSPORTE    5  HOGAR
+                6  IMPREVISTOS     7  OTROS """)
                 categoria = int(input())
-                if(categoria < len(Bolsillo.Categoria)) :
+
+                if categoria < len(Bolsillo.CATEGORIA):
                     cliente.generarAhorro(valorAhorro, categoria, cuenta)
-                    bolsillos = (cliente.listaCuentas.get(cuenta).misBolsillos)
+                    bolsillos = cliente.listaCuentas.get(cuenta).misBolsillos
                     print((bolsillos.get(len(bolsillos) - 1)).mensajeBolsillo())
                 
-            elif (opcionBolsillos == 2):
+            elif opcionBolsillos == 2:
                 print("Selecciona el bolsillo al cual deseas ingresar un monto")
                 Main.traerBolsillos(cuenta)
                 op1 = int(input())
-                if(op1 > len(Cliente.buscarCuenta(op1).misBolsillos) or len(Cliente.buscarCuenta(op1).misBolsillos)==0):
+                if op1 > len(Cliente.buscarCuenta(op1).misBolsillos) or len(Cliente.buscarCuenta(op1).misBolsillos) ==0:
                     print("El bolsillo no existe")
                     return
                     
-                print("1. Carga completa")
-                print("2. Carga parcial")
+                print("1.Carga completa")
+                print("2.Carga parcial")
                 opcion1 = int(input())
+
                 if( opcion1 < 1 or opcion1 >2):
                     print("Opción no valida")
                     return
-                    
 
                 if (opcion1 == 1):
                     print(cliente.cargarAhorro(cuenta, op1))
                 elif (opcion1 == 2):            
                     print(" Valor a cargar de tu bolsillo")
                     valorCarga = int(input())
-                    print(cliente.cargarAhorro(valorCarga, cuenta, op1))
-                            
+                    print(cliente.cargarAhorro(cuenta, op1, valorCarga))
                 else:
                     print("Opción no valida")
                             
-            elif (opcionBolsillos == 3):
+            elif opcionBolsillos == 3:
                 print("selecciona tu bolsillo")
                 Main.traerBolsillos(cuenta)
                 op1 = int(input())
-                if(op1 > len(Cliente.buscarCuenta(op1).misBolsillos) or len(Cliente.buscarCuenta(op1).misBolsillos)==0):
+                if op1 > len(Cliente.buscarCuenta(op1).misBolsillos) or len(Cliente.buscarCuenta(op1).misBolsillos)==0:
                     print("El bolsillo no existe")
                     return
-                    
-                print("1. Descarga completa")
-                print("2. Descarga parcial")
+                print("1.Descarga completa")
+                print("2.Descarga parcial")
                 op2 = int(input())
-                if( op2 < 1 or op2 >2):
+                if op2 < 1 or op2 >2:
                     print("Opción no valida")
                     return
-                    
-                if (op2 == 1):
+                if op2 == 1:
                     print(cliente.descargarAhorro(cuenta, op1))
-     
-                elif (op2 == 1) :
+                elif op2 == 1:
                     print("Valor a descargar de tu bolsillo")
                     valorDescarga = int(input())
-                    print(cliente.descargarAhorro(valorDescarga, cuenta, op1))      
+                    print(cliente.descargarAhorro(cuenta, op1, valorDescarga))
                 else:
                     print("Opción no valida")

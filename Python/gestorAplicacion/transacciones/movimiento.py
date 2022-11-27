@@ -1,7 +1,7 @@
-class Movimiento:
+class Movimiento: # :(
 
-	def movimientoPago():
+	def movimientoPago(self):
 		pass
 
-	def  movimientoTransferencia():
+	def  movimientoTransferencia(self):
 		pass

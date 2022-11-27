@@ -30,32 +30,38 @@ class Cliente:
                 return cuenta
         return None
 
+
     @classmethod
     def listarCuentas(cls):
         for cuenta in Cliente.listaCuentas:
             return cuenta
         return None
 
+
     @classmethod
     def buscarBolsillo(cls, idCuenta, idBolsillo):
         cuenta = Cliente.buscarCuenta(idCuenta)
         return cuenta.getMisBolsillos().get(idBolsillo)
+
 
     @classmethod
     def buscarMulta(cls,idCuenta, idMulta):
         cuenta = Cliente.buscarCuenta(idCuenta);
         return cuenta.getMultas().get(idMulta);
 
+
     @classmethod
     def buscarPrestamo(cls, idCuenta, idPrestamo):
         cuenta = Cliente.buscarCuenta(idCuenta)
         return cuenta.getPrestamos().get(idPrestamo)
+
 
     def hacerTransferencia(self, idCuentaOrigen, idCuentaDestino, valor):
         cuentaOrigen = Cliente.buscarCuenta(idCuentaOrigen)
         cuentaDestino = Cliente.buscarCuenta(idCuentaDestino)
         trasnfer = Transferencia(cuentaOrigen, cuentaDestino, valor)
         return trasnfer.enviarDinero()
+
 
     def solicitarPrestamo(self, valor, tipoPrestamo, idCuenta):
         if (valor >= Prestamo.TOPEMIN and valor <= Prestamo.TOPEMAX):
@@ -65,34 +71,38 @@ class Cliente:
     def generarAhorro(self, valor, categoria, idCuenta):
         Cliente.buscarCuenta(idCuenta).getMisBolsillos().add(Bolsillo.crearBolsillo(valor,Cliente.buscarCuenta(idCuenta),categoria))
 
-    #generarAhorro y descargarAhorro en Java estaban como sobrecara de métodos
-    def cargarAhorroParcialmente(self, valor, idCuenta, idBolsillo):
-        return Cliente.buscarBolsillo(idCuenta, idBolsillo).cargarBolsillo(valor)
 
-    def cargarAhorroTotalmente(self,idCuenta, idBolsillo):
-        return Cliente.buscarBolsillo(idCuenta, idBolsillo).cargarBolsillo()
+    def cargarAhorro(self,idCuenta, idBolsillo, valor= None):
+        if valor == None:
+            return Cliente.buscarBolsillo(idCuenta, idBolsillo).cargarBolsillo() #Recarga total
+        else:
+            return Cliente.buscarBolsillo(idCuenta, idBolsillo).cargarBolsillo(valor) #Recarga parcial
 
-    def descargarAhorroParcialmente(self, valor, idCuenta, idBolsillo):
-        return Cliente.buscarBolsillo(idCuenta, idBolsillo).descargarBolsillo(valor)
 
-    def descargarAhorroTotalmente(self, idCuenta, idBolsillo):
-        return Cliente.buscarBolsillo(idCuenta, idBolsillo).descargarBolsillo()
+    def descargarAhorro(self, idCuenta, idBolsillo, valor=None):
+        if valor == None:
+            return Cliente.buscarBolsillo(idCuenta, idBolsillo).descargarBolsillo() #Recarga total
+        else:
+            return Cliente.buscarBolsillo(idCuenta, idBolsillo).descargarBolsillo(valor) #Recarga parcial
 
-    def hacerPagoPrestamoParcial(self, idCuenta, idPrestamo, cuota):
-        pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota() * cuota), Cliente.buscarCuenta(idCuenta), Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
-        return pago.RealizarPagoPrestamo(cuota)#cambiarnombre en pago
 
-    def hacerPagoPrestamoTotal(self, idCuenta, idPrestamo):
-        pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota()), Cliente.buscarCuenta(idCuenta), Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
-        return pago.RealizarPagoPrestamo() #cambiarnombre en pago
+    def hacerPagoPrestamo(self, idCuenta, idPrestamo, cuota=None):
+        if cuota == None:
+            pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota()), Cliente.buscarCuenta(idCuenta),
+                        Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
+            return pago.RealizarPagoPrestamo()
+        else:
+            pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota() * cuota), Cliente.buscarCuenta(idCuenta), Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
+            return pago.RealizarPagoPrestamo(cuota)#cambiarnombre en pago
 
-    def hacerPagoMultaParcial(self, idCuenta, idMulta, monto):
-        pago = Pago(monto, Cliente.buscarCuenta(idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
-        return pago.realizarPagoMulta(Cliente.buscarMulta(idCuenta, idMulta), monto)#cambiarnombre en pago
 
-    def hacerPagoMultaTotal(self, idCuenta, idMulta, monto):
-        pago = Pago(monto, Cliente.buscarCuenta(idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
-        return pago.realizarPagoMulta(Cliente.buscarMulta(idCuenta, idMulta))#cambiarnombre en pago
+    def hacerPagoMulta(self, idCuenta, idMulta, monto=None):
+        if monto == None:
+            pago = Pago(monto, Cliente.buscarCuenta(idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
+            return pago.realizarPagoMulta(Cliente.buscarMulta(idCuenta, idMulta))  # cambiarnombre en pago
+        else:
+            pago = Pago(monto, Cliente.buscarCuenta(idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
+            return pago.realizarPagoMulta(Cliente.buscarMulta(idCuenta, idMulta), monto)#cambiarnombre en pago
 
 
     #Getters y setters

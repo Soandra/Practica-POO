@@ -4,20 +4,24 @@ class Prestamo:
     TOPEMAX = 7000000
     TOPEMIN = 500000
 
-    def __int__(self, valor, cuenta, tipoPrestamo):
+    def __int__(self, valor, cuenta, tipoPrestamo, fechaPrestamo=None): #simulación de sobrecarga de métodos
         self.cuenta = cuenta
         self.valor = valor
         self.tipoPrestamo = tipoPrestamo
         self.valorPrestamo = 0
         self.diasMora = ""
-        self.fechaPrestamo = dt.now().strftime("%d/%m/%Y")
-        self.fechaPago = self.fechaPrestamo + timedelta(days= 30)
         self.interes = 0.0
-
         self.cuotasDePago = 24
         self.valorCuota = 0
         self.estado = True
         self.generarPrestamo(valor, tipoPrestamo)
+
+        if fechaPrestamo == None:
+            self.fechaPrestamo = dt.now().strftime("%d/%m/%Y")
+            self.fechaPago = self.fechaPrestamo + timedelta(days=30)
+        else:
+            self.fechaPrestamo = fechaPrestamo
+            self.fechaPago = self.fechaPrestamo + timedelta(days=30)
 
     def generarPrestamo(self, valorPrestamo, tipoPrestamo):
         if tipoPrestamo == "universitario":
@@ -33,7 +37,7 @@ class Prestamo:
         self.cuenta.setDeuda(valorTotalPrestamo + self.cuenta.getDeuda())
         self.cuenta.setSaldoTotal(self.cuenta.getSaldoTotal() + valorPrestamo)
         self.cuenta.setSaldoDisponible(self.cuenta.getSaldoDisponible() + valorPrestamo)
-        self.valorCuota = round(valorTotalPrestamo / self.cuotasDePago )
+        self.valorCuota = round(valorTotalPrestamo / self.cuotasDePago)
         self.valorPrestamo = valorPrestamo
         self.tipoPrestamo = tipoPrestamo
 
@@ -52,7 +56,7 @@ class Prestamo:
         self.cuenta.setSaldoTotal(self.cuenta.getSaldoTotal() - valorTotal)
         self.cuenta.setSaldoDisponible(self.cuenta.getSaldoDisponible() - valorTotal)
         self.cuenta.getPrestamos().remove(self)
-        if self.cuenta.getPrestamos().isEmpty():
+        if len(self.cuenta.getPrestamos()) == 0:
             self.cuenta.setDeuda(0)
 
 
@@ -103,7 +107,7 @@ class Prestamo:
         self.estado = estado
 
     def getId(self):
-        return self.cuenta.getPrestamos().indexOf(self)
+        return self.cuenta.getPrestamos().index(self)
 
     def mensajePrestamo(self):
         return f"Ha sido aprobado tu prestamo \
