@@ -1,4 +1,5 @@
-from gestorAplicacion.usuario.cuenta import Cuenta
+from Python.gestorAplicacion.usuario.cuenta import Cuenta
+
 
 class CuentaCorriente(Cuenta):
      def __int__(self, titular, saldo):
@@ -6,15 +7,17 @@ class CuentaCorriente(Cuenta):
 
      def __str__(self): #Incompleto, falta el id
           if self.estado:
-               return f'Cuenta (Corriente) -> ID = ... :\nSaldo total = {self.saldoTotal} ' \
-                      f', Saldo disponible = {self.saldoDisponible}' \
-                      f', Número de cuenta {self.numero}' \
-                      f', Estado = Activo'
+               return f'Cuenta (Corriente) -> ID = ... :\n' \
+                      'Saldo total = {self.saldoTotal} ' \
+                      ', Saldo disponible = {self.saldoDisponible}' \
+                      ', Número de cuenta {self.numero}' \
+                      ', Estado = Activo'
 
           else:
-               return f'Cuenta (Ahorro) -> ID = ... :\nSaldo total = {self.saldoTotal} ' \
-                      f', Saldo disponible = {self.saldoDisponible}' \
-                      f', Número de cuenta {self.numero}' \
-                      f', Estado = Inactivo'
+               return f'Cuenta (Ahorro) -> ID = ... :\n' \
+                      'Saldo total = {self.saldoTotal} ' \
+                      ', Saldo disponible = {self.saldoDisponible}' \
+                      ', Número de cuenta {self.numero}' \
+                      ', Estado = Inactivo'
 
 

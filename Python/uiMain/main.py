@@ -1,9 +1,11 @@
+
+from Python.gestorAplicacion.usuario.cliente import Cliente
 from UIPrestamo import *
 from UIPago import *
 from UIBolsillos import *
-from gestorAplicacion.usuario.cliente import Cliente
+
 class Main:
-    def traerCuentas():
+    def traerCuentas(self):
         for i in cliente.listaCuentas:
             print(i)
 

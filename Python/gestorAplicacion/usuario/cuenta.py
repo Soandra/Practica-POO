@@ -1,4 +1,8 @@
 import random
+
+from Python.gestorAplicacion.usuario.cliente import Cliente
+
+
 class Cuenta:
     id = 1000
 
@@ -10,19 +14,18 @@ class Cuenta:
         self.misBolsillos = []
         self.estado = True
         self.numero = random.randint(1000,10000)
-        #Cuenta.id = getId() + 1
-        """
-        if len(misBolsillos) == 0:
-            self.saldoDisponible = saldoTotal
+        Cuenta.id = Cuenta.getId() + 1
+
+        if len(self.misBolsillos) == 0:
+            self.saldoDisponible = self.saldoTotal
         else:
-            self.saldoDisponible = saldoTotal - saldoEnBolsillos()
-        """
+            self.saldoDisponible = self.saldoTotal - self.saldoEnBolsillos()
+
 
         #Función para disminuir el saldo total de la cuenta
         def aumentarSaldo(self, cantidad):
             if self.estado:
                 setSaldoTotal(getSaldoTotal() + cantidad)
-
 
         #Función para disminuir el saldo total de la cuenta
         def disminuirSaldo(self, cantidad):
@@ -31,11 +34,14 @@ class Cuenta:
 
         #Función que retorna el saldo de los bolsillos
         def saldoEnBolsillos(self):
-            pass
+            valorEnBolsilos = 0;
+            for bolsillo in self.misBolsillos:
+                valorEnBolsilos += bolsillo.getValorCargaBolsillo()
+            return valorEnBolsilos
 
-        #Getters y setters
-        def getId(self):
-            pass
+        @classmethod
+        def getId(cls):
+            return (Cliente.listaCuentas).index(cls)
         def getTitular(self):
             return self.titular
 

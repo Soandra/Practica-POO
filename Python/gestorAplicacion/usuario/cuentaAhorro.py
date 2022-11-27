@@ -13,18 +13,20 @@ class CuentaAhorro(Cuenta):
 
     def __str__(self): #Incompleto, falta el id
         if self.estado:
-            return f'Cuenta (Ahorro) -> ID = ... :\nSaldo total = {self.saldoTotal} ' \
-                   f', Saldo disponible = {self.saldoDisponible}' \
-                   f', Número de cuenta {self.numero}' \
-                   f', Deuda = {self._deuda}' \
-                   f', Estado = Activo'
+            return f'Cuenta (Ahorro) -> ID = {Cuenta.getId()} :\n' \
+                   'Saldo total = {self.saldoTotal} ' \
+                   ', Saldo disponible = {self.saldoDisponible}' \
+                   ', Número de cuenta {self.numero}' \
+                   ', Deuda = {self._deuda}' \
+                   ', Estado = Activo'
 
         else:
-            return f'Cuenta (Ahorro) -> ID = ... :\nSaldo total = {self.saldoTotal} ' \
-                   f', Saldo disponible = {self.saldoDisponible}' \
-                   f', Número de cuenta {self.numero}' \
-                   f', Deuda = {self._deuda}' \
-                   f', Estado = Inactivo'
+            return f'Cuenta (Ahorro) -> ID = {Cuenta.getId()}:\n' \
+                   'Saldo total = {self.saldoTotal} ' \
+                   ', Saldo disponible = {self.saldoDisponible}' \
+                   ', Número de cuenta {self.numero}' \
+                   ', Deuda = {self._deuda}' \
+                   ', Estado = Inactivo'
 
     #Getters y setters
     def getDeuda(self):
