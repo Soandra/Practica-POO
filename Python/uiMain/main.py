@@ -1,26 +1,28 @@
 from UIPrestamo import *
-from Python.gestorAplicacion.usuario.cliente import Cliente
+from UIPago import *
+from UIBolsillos import *
+from gestorAplicacion.usuario.cliente import Cliente
+class Main:
+    def traerCuentas():
+        for i in cliente.listaCuentas:
+            print(i)
 
-def traerCuentas():
-    for i in cliente.listaCuentas:
-        print(i)
+    def traerBolsillos(idCuenta):
+        cuenta = cliente.buscarCuenta(idCuenta)
+        for bolsillo in cuenta.misBolsillos:
+            print(bolsillo.__str__())
 
-def traerBolsillos(idCuenta):
-    cuenta = cliente.buscarCuenta(idCuenta)
-    for bolsillo in cuenta.misBolsillos:
-        print(bolsillo.__str__())
+    def traerMultas(idCuenta):
+        cuenta = cliente.buscarCuenta(idCuenta)
+        for multa in cuenta.getMultas():
+            if multa.isEstado():
+                print(multa)
 
-def traerMultas(idCuenta):
-    cuenta = cliente.buscarCuenta(idCuenta)
-    for multa in cuenta.getMultas():
-        if multa.isEstado():
-            print(multa)
-
-def traerPrestamos(idCuenta):
-    cuenta = cliente.buscarCuenta(idCuenta)
-    for prestamo in cuenta.getPrestamos():
-        if prestamo.isEstado():
-            print(prestamo)
+    def traerPrestamos(idCuenta):
+        cuenta = cliente.buscarCuenta(idCuenta)
+        for prestamo in cuenta.getPrestamos():
+            if prestamo.isEstado():
+                print(prestamo)
 
 if __name__ == "__main__":
     cliente = Cliente("Jaimito", 20192121)
@@ -38,11 +40,11 @@ if __name__ == "__main__":
         opcion = int(input("Ingrese una opción: "))
 
         if opcion == 1:
-            prestamo(cliente)
+            UIPrestamo.prestamo(cliente)
         elif opcion == 2:
-            pass
+            UIPago.pago(cliente)
         elif opcion == 3:
-            pass
+            UIBolsillos.bolsillo(cliente)
         elif opcion == 4:
             pass
         elif opcion == 5:

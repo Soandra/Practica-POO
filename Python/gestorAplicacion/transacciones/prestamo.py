@@ -34,15 +34,15 @@ class Prestamo:
         self.cuenta.setSaldoTotal(self.cuenta.getSaldoTotal() + valorPrestamo)
         self.cuenta.setSaldoDisponible(self.cuenta.getSaldoDisponible() + valorPrestamo)
         self.valorCuota = round(valorTotalPrestamo / self.cuotasDePago )
-        self.valorPrestamo = valorPrestamo;
-        self.tipoPrestamo = tipoPrestamo;
+        self.valorPrestamo = valorPrestamo
+        self.tipoPrestamo = tipoPrestamo
 
     def saldarCuota(self, cantidadCuota):
-        valor = self.valorCuota * self.cantidadCuotas
+        valor = self.valorCuota * cantidadCuota
         self.cuenta.setDeuda(self.cuenta.getDeuda() - valor)
         self.cuenta.setSaldoTotal(self.cuenta.getSaldoTotal() - valor)
         self.cuenta.setSaldoDisponible(self.cuenta.getSaldoDisponible() - valor)
-        self.cuotasDePago -= self.cantidadCuotas
+        self.cuotasDePago -= cantidadCuota
         self.valorPrestamo -= self.valorCuota
 
     def saldarPrestamo(self):
@@ -51,9 +51,9 @@ class Prestamo:
         self.cuenta.setDeuda(valorTotal - self.cuenta.getDeuda())
         self.cuenta.setSaldoTotal(self.cuenta.getSaldoTotal() - valorTotal)
         self.cuenta.setSaldoDisponible(self.cuenta.getSaldoDisponible() - valorTotal)
-        self.cuenta.getPrestamos().remove(self);
+        self.cuenta.getPrestamos().remove(self)
         if self.cuenta.getPrestamos().isEmpty():
-            self.cuenta.setDeuda(0);
+            self.cuenta.setDeuda(0)
 
 
     #Getters y setters
@@ -61,40 +61,40 @@ class Prestamo:
         return self.valorPrestamo
 
     def setValorPrestamo(self, valorPrestamo):
-        self.valorPrestamo = valorPrestamo;
+        self.valorPrestamo = valorPrestamo
 
     def getDiasMora(self):
-        return self.diasMora;
+        return self.diasMora
 
     def setDiasMora(self, diasMora):
         self.diasMora = diasMora
 
     def getValorCuota(self):
-        return self.valorCuota;
+        return self.valorCuota
 
     def setValorCuota(self, valorCuota):
-        self.valorCuota = valorCuota;
+        self.valorCuota = valorCuota
 
     def getFechaPago(self):
-        return self.fechaPago;
+        return self.fechaPago
 
     def setFechaPago(self, fechaPago):
-        self.fechaPago = fechaPago;
+        self.fechaPago = fechaPago
 
     def getInteres(self):
-        return self.interes;
+        return self.interes
 
     def setInteres(self, interes):
         self.interes = interes
 
     def getTipoPrestamo(self):
-        return self.tipoPrestamo;
+        return self.tipoPrestamo
 
     def setTipoPrestamo(self, tipoPrestamo):
-        self.tipoPrestamo = tipoPrestamo;
+        self.tipoPrestamo = tipoPrestamo
 
     def getFechaPrestamo(self):
-        return self.fechaPrestamo;
+        return self.fechaPrestamo
 
     def isEstado(self):
         return self.estado
@@ -106,16 +106,16 @@ class Prestamo:
         return self.cuenta.getPrestamos().indexOf(self)
 
     def mensajePrestamo(self):
-        return f"Ha sido aprobado tu prestamo" \
-               f"con un valor de {self.valorPrestamo}" \
-               f"en la fecha " \
-               f"De tipo {self.tipoPrestamo}" \
-               f"con una tasa de interes del {self.interes}, " \
-               f"fue desembolsado en la cuenta {self.cuenta.getNumero()}" \
-               f"La cuota a pagar será de {self.valorCuota}" \
-               f"para una deuda total de {self.cuenta.getDeuda()}"
+        return f"Ha sido aprobado tu prestamo \
+               con un valor de {self.valorPrestamo} \
+               en la fecha \
+               De tipo {self.tipoPrestamo} \
+               con una tasa de interes del {self.interes}, \
+               fue desembolsado en la cuenta {self.cuenta.getNumero()}\
+               La cuota a pagar será de {self.valorCuota} \
+               para una deuda total de {self.cuenta.getDeuda()}"
 
     def __str__(self):
-        return self.getId() + ": Prestamo con una deuda pendiente de " + self.cuenta.getDeuda() + " de tipo " + self.tipoPrestamo + " La cuota a pagar es " + self.valorCuota;
+        return self.getId() + ": Prestamo con una deuda pendiente de " + self.cuenta.getDeuda() + " de tipo " + self.tipoPrestamo + " La cuota a pagar es " + self.valorCuota
 
 
