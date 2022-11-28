@@ -1,5 +1,5 @@
 from Python.gestorAplicacion.usuario.cliente import Cliente
-from Python.uiMain.main import Main
+from Python.main import Main
 
 
 class UIPago:

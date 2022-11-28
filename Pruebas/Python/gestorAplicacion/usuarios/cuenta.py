@@ -1,6 +1,4 @@
 import random
-
-
 class Cuenta:
     id = 1000
 
@@ -19,24 +17,27 @@ class Cuenta:
         else:
             self.saldoDisponible = self.saldoTotal - self.saldoEnBolsillos()
 
+
     def aumentarSaldo(self, cantidad):
         if self.estado:
             self.setSaldoTotal(self.getSaldoTotal() + cantidad)
 
+
     def disminuirSaldo(self, cantidad):
         if self.estado and (self.getSaldoDisponibles() >= cantidad):
             self.setSaldoTotal(self.getSaldoTotal() - cantidad)
+
 
     def saldoEnBolsillos(self):
         valorEnBolsilos = 0;
         for bolsillo in self.misBolsillos:
             valorEnBolsilos += bolsillo.getValorCargaBolsillo()
         return valorEnBolsilos
-
+        
     @classmethod
     def getId(cls):
         return Cuenta.id
-
+    
     def getTitular(self):
         return self.titular
 
@@ -55,11 +56,11 @@ class Cuenta:
     def setSaldoTotal(self, saldoTotal):
         self.saldoTotal = saldoTotal
 
-    def getSaldoDisponibles(self):
+    def getSaldoDisponible(self):
         return self.saldoDisponible
 
     def setSaldoDisponible(self, saldoDisponible):
-        self.saldoDisponible = saldoDisponible
+        self.saldoDisponible= saldoDisponible
 
     def getMisBolsillos(self):
         return self.misBolsillos
@@ -78,15 +79,6 @@ class Cuenta:
 
     def setNumero(self, numero):
         self.numero = numero
-
-
-
-
-
-
-
-
-
 
 
 

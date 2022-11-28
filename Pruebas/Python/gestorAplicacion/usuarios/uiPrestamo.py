@@ -1,9 +1,11 @@
-from Python.main import *
+from cliente import Cliente
+from uiMenu import UiMenu
+
 class UIPrestamo:
     @classmethod
     def prestamo(cls, cliente):
         print("Ingresa el ID de la cuenta que deseas aplicar el prestamo")
-        Main.traerCuentas()
+        UiMenu.traerCuentas()
         opcion = int(input())
         if opcion >= 0 and opcion < len(Cliente.listaCuentas):
             # falta validación de si es corriente o no
@@ -22,4 +24,3 @@ class UIPrestamo:
                 cliente.solicitarPrestamo(valor, tipoPrestamo, opcion)
                 prestamos = Cliente.listaCuentas.get(opcion).getprestamos() #organizar
                 print(prestamos.get(len(prestamos) - 1).mensajePrestamo())
-

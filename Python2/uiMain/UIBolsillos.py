@@ -1,6 +1,6 @@
 from Python.gestorAplicacion.transacciones.bolsillo import Bolsillo
 from Python.gestorAplicacion.usuario.cliente import Cliente
-from Python.uiMain.main import Main
+from Python.main import Main
 
 
 class UIBolsillos:

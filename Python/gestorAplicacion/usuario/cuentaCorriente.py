@@ -1,17 +1,15 @@
-from Python.gestorAplicacion.usuario.cuenta import Cuenta
-
+from cuenta import Cuenta
 
 class CuentaCorriente(Cuenta):
-     def __int__(self, titular, saldo):
-          super.__init__(titular, saldo, "Corriente")
 
-     def __str__(self): #Incompleto, falta el id
+    def __init__(self, titular, saldo, tipoCuenta):
+        super().__init__(titular, saldo, tipoCuenta)
 
-            return f'Cuenta (Corriente) -> ID = ... :\n' \
-                    'Saldo total = {self.saldoTotal} ' \
-                    ', Saldo disponible = {self.saldoDisponible}' \
-                    ', Número de cuenta {self.numero}' \
-                    ', Estado = Activo'
 
+    def __str__(self):
+        if self.estado:
+            return f'Cuenta (Corriente) -> ID = {self.getId()} :\nSaldo total = {self.saldoTotal}, Saldo disponible = {self.saldoDisponible}, Número de cuenta {self.numero}, Estado = activo'
+        else:
+           return f'Cuenta (Corriente) -> ID = {self.getId()} :\nSaldo total = {self.saldoTotal}, Saldo disponible = {self.saldoDisponible}, Número de cuenta {self.numero}, Estado = inactivo'
 
 
