@@ -21,6 +21,13 @@ class Cliente:
             Cliente.listaCuentas.append(CuentaAhorro(self, random.randint(100000, 600000), "Ahorro"))
             Cliente.listaCuentas.append(CuentaCorriente(self, random.randint(100000, 600000), "Corriente"))
 
+
+    def buscarCuenta(cls, idCuenta):
+        for cuenta in Cliente.listaCuentas:
+            if idCuenta == cuenta.id:
+                return cuenta
+        return None
+
     @classmethod
     def listarCuentas(cls):
         for cuenta in Cliente.listaCuentas:
@@ -56,11 +63,11 @@ class Cliente:
 
     def solicitarPrestamo(self, valor, tipoPrestamo, idCuenta):
         if (valor >= Prestamo.TOPEMIN and valor <= Prestamo.TOPEMAX):
-            (Cliente.buscarCuenta(idCuenta)).getPrestamos().add(Prestamo(valor, Cliente.buscarCuenta(idCuenta)), tipoPrestamo)
+            (Cliente.buscarCuenta(self,idCuenta)).getPrestamos().append(Prestamo(valor, Cliente.buscarCuenta(self,idCuenta),tipoPrestamo))
 
 
     def generarAhorro(self, valor, categoria, idCuenta):
-        Cliente.buscarCuenta(idCuenta).getMisBolsillos().add(Bolsillo.crearBolsillo(valor,Cliente.buscarCuenta(idCuenta),categoria))
+        Cliente.buscarCuenta(idCuenta).getMisBolsillos().append(Bolsillo.crearBolsillo(valor,Cliente.buscarCuenta(idCuenta),categoria))
 
 
     def cargarAhorro(self,idCuenta, idBolsillo, valor= None):

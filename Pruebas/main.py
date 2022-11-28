@@ -45,11 +45,11 @@ print(boldillo)
 multa = Multa(cuenta, 60000)
 print(multa.fecha)
 print(Multa.multas)
-#print(multa)   !HAY UN ERROR AQUÍ!
+print(multa)   #!HAY UN ERROR AQUÍ!
 
 #pago = Pago(2000,cuenta, prestamo, "Prestamo")
 #print(pago.fecha)
 
-cliente = Cliente("Jaimito", 123456)
-print(cliente.listaCuentas) #las cuentas se añaden correctamente a la lista
-print(cliente.listarCuentas())
+# cliente = Cliente("Jaimito", 123456)
+# print(cliente.listaCuentas) #las cuentas se añaden correctamente a la lista
+# print(cliente.listarCuentas())

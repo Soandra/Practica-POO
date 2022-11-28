@@ -1,6 +1,6 @@
 import random
 class Cuenta:
-    id = 1000
+    
 
     def __init__(self, titular, saldo, tipoCuenta):
         self.titular = titular
@@ -10,7 +10,7 @@ class Cuenta:
         self.misBolsillos = []
         self.saldoTotal = saldo
         self.saldoDisponible = saldo
-        Cuenta.id = self.getId() + 1
+        self.id = random.randint(1, 20)
 
         if len(self.misBolsillos) == 0:
             self.saldoDisponible = self.saldoTotal
@@ -29,14 +29,14 @@ class Cuenta:
 
 
     def saldoEnBolsillos(self):
-        valorEnBolsilos = 0;
+        valorEnBolsilos = 0
         for bolsillo in self.misBolsillos:
             valorEnBolsilos += bolsillo.getValorCargaBolsillo()
         return valorEnBolsilos
         
-    @classmethod
-    def getId(cls):
-        return Cuenta.id
+    
+    def getId(self):
+        return self.id
     
     def getTitular(self):
         return self.titular

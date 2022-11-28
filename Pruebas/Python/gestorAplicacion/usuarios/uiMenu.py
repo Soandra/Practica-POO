@@ -1,5 +1,7 @@
 from cliente import Cliente
 
+
+
 class UiMenu:
     @classmethod
     def traerCuentas(cls):
@@ -47,10 +49,10 @@ if __name__ == "__main__":
         opcion = int(input("Ingrese una opción: "))
 
         if opcion == 1:
-            from Python.uiMain.UIPrestamo import UIPrestamo
+            from uiPrestamo import UIPrestamo
             UIPrestamo.prestamo(cliente)
         elif opcion == 2:
-            from Python.uiMain.UIPago import UIPago
+            from uiPago import UIPago
             UIPago.pago(cliente)
         elif opcion == 3:
             #UIBolsillos.bolsillo(cliente)

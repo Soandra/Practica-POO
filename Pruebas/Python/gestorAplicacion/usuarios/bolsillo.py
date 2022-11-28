@@ -7,11 +7,12 @@ class Bolsillo():
         self.metaAhorro = metaAhorro
         self.id = 0
         self.valorCargaBolsillo = 0
+        cuenta.getMisBolsillos().append(self)
     
     @classmethod
-    def crearBolsillo(cls, metaAhorro, cuenta, opcion) :
+    def crearBolsillo(cls, metaAhorro, opcion, cuenta) :
         cuenta.setSaldoDisponible(cuenta.getSaldoTotal())
-        return Bolsillo(metaAhorro, cuenta, opcion)
+        return Bolsillo(metaAhorro, opcion, cuenta)
 
 
     def cargarBolsillo(self, valor=None):
@@ -22,12 +23,11 @@ class Bolsillo():
             elif (self.valorCargaBolsillo == self.metaAhorro):
                 return "La meta de ahorro ya fue alcanzada"
 
-            elif (self.cuenta.misBolsillos.isEmpty()):
+            elif (self.cuenta.misBolsillos == []):
                 return "No existe un bolsillo, por favor cree uno"
 
             self.valorCargaBolsillo = self.metaAhorro
             self.cuenta.setSaldoDisponible(self.cuenta.getSaldoTotal() - self.cuenta.saldoEnBolsillos())
-            self.cuenta.misBolsillos.set(self.cuenta.misBolsillos.index(self), self)
             return "Felicitaciones, alcanzaste tu meta de ahorro"
 
         else:
@@ -45,8 +45,7 @@ class Bolsillo():
 
             self.valorCargaBolsillo += valor
             self.cuenta.setSaldoDisponible(self.cuenta.getSaldoTotal() - self.cuenta.saldoEnBolsillos())
-            self.cuenta.misBolsillos.set(self.cuenta.misBolsillos.indexOf(self), self)
-            return "El bolsillo fue cargado con " + self.getValorCargaBolsillo()
+            return f"El bolsillo fue cargado con {self.getValorCargaBolsillo()}"
 
 
     def descargarBolsillo(self, valor=None):
@@ -60,15 +59,14 @@ class Bolsillo():
             self.cuenta.misBolsillos.set(self.cuenta.misBolsillos.indexOf(self), self)
             return "Se ha descargado el bolsillo completamente."
         else:
-            if (self.valorCargaBolsillo <= valor):
-                self.descargarBolsillo()
+            if (self.valorCargaBolsillo == 0):
+                return "Su bolsillo no cuenta con saldo"
 
             elif (self.cuenta.misBolsillos.isEmpty() or self.valorCargaBolsillo == 0):
                 return "Debe crear o cargar el bolsillo para poder descargarlo"
 
             self.valorCargaBolsillo -= valor
             self.cuenta.setSaldoTotal(self.cuenta.getSaldoDisponible() + self.cuenta.saldoEnBolsillos())
-            self.cuenta.misBolsillos.set(self.cuenta.misBolsillos.indexOf(self), self)
             return f"Se ha descargado el valor del bolsillo a tu cuenta, quedas con un saldo de ahorro de: {self.getValorCargaBolsillo()}"
 
 
@@ -85,9 +83,7 @@ class Bolsillo():
         self.categoria = categoria
 
     def getId(self) :
-        if self in self.cuenta.getMisBolsillos():
-            return self.cuenta.getMisBolsillos().index(self)
-        return None
+        return self.cuenta.getMisBolsillos().index(self)
 
     def setId(self, id) :
         self.id = id
@@ -107,4 +103,4 @@ class Bolsillo():
                 \n hasta el momento has ahorrado = {self.valorCargaBolsillo}"
 
     def __str__(self) :
-        return f"Bolsillo: {self.getId()} en la cuenta {self.cuenta.getNumero()} con una meta de ahorro  {self.metaAhorro} hasta el momento has ahorrado {self.valorCargaBolsillo}"
+        return f"Bolsillo {self.getId()}: en la cuenta {self.cuenta.getNumero()} con una meta de ahorro {self.metaAhorro} hasta el momento has ahorrado {self.valorCargaBolsillo}"
