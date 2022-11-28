@@ -21,8 +21,8 @@ class UiMenu:
     @classmethod
     def traerBolsillos(cls, idCuenta):
         
-        cuenta = Cliente.buscarCuenta(idCuenta)
-        for bolsillo in cuenta.misBolsillos:
+        cuenta = Cliente.buscarCuenta(cls, idCuenta)
+        for bolsillo in cuenta.getMisBolsillos():
             print(bolsillo.__str__())
 
     @classmethod
@@ -82,7 +82,8 @@ if __name__ == "__main__":
             from uiPago import UIPago
             UIPago.Pagar(cliente)
         elif opcion == 3:
-            #UIBolsillos.bolsillo(cliente)
+            from UIBolsillos import UIBolsillos
+            UIBolsillos.bolsillo(cliente)
             pass
         elif opcion == 4:
             pass

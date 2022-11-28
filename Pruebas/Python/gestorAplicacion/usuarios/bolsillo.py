@@ -1,13 +1,15 @@
 
 class Bolsillo():
     CATEGORIA = ["VIAJES", "EDUCACION", "SALUD", "ALIMENTACION", "TRANSPORTE", "HOGAR", "IMPREVISTOS", "OTROS"]
-    def __init__(self, metaAhorro,opcion, cuenta=None) :
+    aux = 0
+    def __init__(self, metaAhorro,opcion, cuenta) :
         self.cuenta = cuenta
         self.categoria = Bolsillo.CATEGORIA[opcion]
         self.metaAhorro = metaAhorro
-        self.id = 0
+        self.id = Bolsillo.aux +1
+        Bolsillo.aux = Bolsillo.aux +1
         self.valorCargaBolsillo = 0
-        cuenta.getMisBolsillos().append(self)
+        #cuenta.getMisBolsillos().append(self)
     
     @classmethod
     def crearBolsillo(cls, metaAhorro, opcion, cuenta) :
@@ -96,11 +98,11 @@ class Bolsillo():
 
     def mensajeBolsillo(self) :
         return f"Has iniciado un nuevo ahorro: \
-                Número de bolsillo = {self.getId()}\
-                , se asoció a la cuenta = {self.cuenta.getNumero()}\
-                \n estableciste una meta de ahorro de = {self.metaAhorro}\
-                , para ser usado en = {self.categoria}\
-                \n hasta el momento has ahorrado = {self.valorCargaBolsillo}"
+Número de bolsillo = {self.getId()}\
+, se asoció a la cuenta = {self.cuenta.getNumero()}\
+                \nestableciste una meta de ahorro de = {self.metaAhorro}\
+, para ser usado en = {self.categoria}\
+                \nHasta el momento has ahorrado = {self.valorCargaBolsillo}"
 
     def __str__(self) :
         return f"Bolsillo {self.getId()}: en la cuenta {self.cuenta.getNumero()} con una meta de ahorro {self.metaAhorro} hasta el momento has ahorrado {self.valorCargaBolsillo}"

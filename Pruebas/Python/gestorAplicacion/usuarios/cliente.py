@@ -37,8 +37,8 @@ class Cliente:
 
     @classmethod
     def buscarBolsillo(cls, idCuenta, idBolsillo):
-        cuenta = Cliente.buscarCuenta(idCuenta)
-        return cuenta.getMisBolsillos().get(idBolsillo)
+        cuenta = Cliente.buscarCuenta(cls, idCuenta)
+        return cuenta.getMisBolsillos()[idBolsillo]
 
 
     @classmethod
@@ -54,8 +54,8 @@ class Cliente:
 
     
     def hacerTransferencia(self, idCuentaOrigen, idCuentaDestino, valor):
-        cuentaOrigen = Cliente.buscarCuenta(idCuentaOrigen)
-        cuentaDestino = Cliente.buscarCuenta(idCuentaDestino)
+        cuentaOrigen = Cliente.buscarCuenta(self, idCuentaOrigen)
+        cuentaDestino = Cliente.buscarCuenta(self, idCuentaDestino)
         
         trasnfer = Transferencia(cuentaOrigen, cuentaDestino, valor)
         return trasnfer.enviarDinero()
@@ -67,7 +67,7 @@ class Cliente:
 
 
     def generarAhorro(self, valor, categoria, idCuenta):
-        Cliente.buscarCuenta(idCuenta).getMisBolsillos().append(Bolsillo.crearBolsillo(valor,Cliente.buscarCuenta(idCuenta),categoria))
+        Cliente.buscarCuenta(self, idCuenta).getMisBolsillos().append(Bolsillo.crearBolsillo(valor, categoria, Cliente.buscarCuenta(self, idCuenta)))
 
 
     def cargarAhorro(self,idCuenta, idBolsillo, valor= None):
