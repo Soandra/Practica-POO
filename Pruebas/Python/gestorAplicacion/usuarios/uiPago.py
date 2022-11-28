@@ -10,10 +10,10 @@ class UIPago:
         2. Pagar multa""")
         opcionPagos=int(input())
         print("Ingresa el ID de la cuenta que deseas aplicar el prestamo")
-        UiMenu.traerCuentas()
+        UiMenu.traerCuentasAhorro()
         opcion = int(input())
         if (opcionPagos == 1):
-                if (len(((Cliente.buscarCuenta(opcion)).getPrestamos())) == 0) :
+                if (len((Cliente.buscarCuenta(cliente, opcion).getPrestamos())) == 0) :
                     print("Usted no cuenta con prestamos actualmente")
                     return
                 
@@ -53,7 +53,7 @@ class UIPago:
                         print(cliente.hacerPagoPrestamo(opcion,numeroDePrestamo))
                           
         elif (opcionPagos == 2):
-            if (((len(Cliente.buscarCuenta(opcion)).getMultas())) == 0) :
+            if (((Cliente.buscarCuenta(cls, opcion).getMultas())) == 0) :
                 print("Usted no tiene multas actualmente")
                 return
                 

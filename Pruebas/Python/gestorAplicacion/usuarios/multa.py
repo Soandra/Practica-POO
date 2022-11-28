@@ -1,4 +1,5 @@
 from datetime import datetime as dt
+from datetime import timedelta
 
 class Multa :
     PLAZOPAGO = 30
@@ -21,7 +22,7 @@ class Multa :
             self.monto -= monto
             self.cuenta.setSaldoTotal(self.cuenta.getSaldoTotal()-monto)
             self.cuenta.setSaldoDisponible(self.cuenta.getSaldoDisponible()-monto)
-            self.cuenta.getMultas().set(self.cuenta.getMultas().indexOf(self),self)
+            #self.cuenta.getMultas().set(self.cuenta.getMultas().index(self),self)
 
     @classmethod
     def multarCuenta(cls, cuenta):
@@ -33,12 +34,12 @@ class Multa :
     '''
     @classmethod
     def moraMulta(cls, pago, multa):
-        fechaMulta = dt.strptime(multa.getFecha())
-        fechaPago = dt.strptime(pago.getFecha())
-        discriminante =  (fechaPago-fechaMulta).days()
+        fechaMulta = dt.strptime(multa.getFecha(),"%d/%m/%Y")
+        fechaPago = dt.strptime(pago.getFecha(),"%d/%m/%Y")
+        discriminante =  (fechaPago-fechaMulta)
 
-        if (discriminante > cls.plazoPago):
-            diasMora = discriminante- cls.plazoPago
+        if (discriminante > timedelta(Multa.PLAZOPAGO)):
+            diasMora = discriminante - Multa.PLAZOPAGO
             (pago.getCuenta()).setDeuda((pago.getCuenta()).getDeuda()*(1.01**diasMora)) #aplicar un mora del 1% por dia de mora
             if (diasMora > 90):                 # esto deberia de compararse por ultima fecha de pago y no por los dias de mora
                 Multa.multarCuenta(pago.getCuenta())
@@ -48,12 +49,12 @@ class Multa :
     es mayor a 90 se multa la cuenta pasando Multa:a true y generando una nueva multa
     '''
     def moraPrestamo(cls, pago, cuenta, prestamo):
-        fechaMulta = dt.strptime(prestamo.getFechaPago())
-        fechaPago = dt.strptime(pago.getFecha())
-        discriminante =  (fechaPago-fechaMulta).days()
+        fechaMulta = dt.strptime(prestamo.getFechaPago(),"%d/%m/%Y")
+        fechaPago = dt.strptime(pago.getFecha(),"%d/%m/%Y")
+        discriminante =  (fechaPago-fechaMulta)
 
-        if (discriminante > cls.plazoPago) :
-            diasMora = discriminante - cls.plazoPago
+        if (discriminante> timedelta(Multa.PLAZOPAGO)):
+            diasMora = discriminante - Multa.PLAZOPAGO
             cuenta.setDeuda(cuenta.getDeuda()*(1.01**diasMora)) #aplicar un mora del 1% por dia de mora
 
             if (diasMora > 90):                 # esto deberia de compararse por ultima fecha de pago y no por los dias de mora

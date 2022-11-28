@@ -1,5 +1,7 @@
 from cliente import Cliente
-
+from prestamo import Prestamo
+from multa import Multa
+from cuentaAhorro import CuentaAhorro
 
 
 class UiMenu:
@@ -8,6 +10,13 @@ class UiMenu:
         
         for i in Cliente.listaCuentas:
             print(i)
+
+    @classmethod
+    def traerCuentasAhorro(cls):
+        
+        for i in Cliente.listaCuentas:
+            if i.getTipoCuenta() == "Ahorro":
+                print(i)
 
     @classmethod
     def traerBolsillos(cls, idCuenta):
@@ -19,7 +28,7 @@ class UiMenu:
     @classmethod
     def traerMultas(cls, idCuenta):
        
-        cuenta = Cliente.buscarCuenta(idCuenta)
+        cuenta = Cliente.buscarCuenta(cls, idCuenta)
         for multa in cuenta.getMultas():
             if multa.isEstado():
                 print(multa)
@@ -27,15 +36,33 @@ class UiMenu:
     @classmethod
     def traerPrestamos(cls, idCuenta):
         
-        cuenta = Cliente.buscarCuenta(idCuenta)
+        cuenta = Cliente.buscarCuenta(cls, idCuenta)
         for prestamo in cuenta.getPrestamos():
             if prestamo.isEstado():
                 print(prestamo)
 
 
+
+def crearObjetos(cliente):
+    #(self, valor, cuenta, tipoPrestamo, fechaPrestamo=None)
+    #(self, cuenta= None, monto = 50000, fecha = dt.now().strftime("%d/%m/%Y")):
+    #(self, titular, saldo, tipoCuenta)
+    c1= CuentaAhorro(cliente, 23484578, "Ahorro")
+    cliente.getListaCuentas().append(c1)
+    p1 = Prestamo(12311,c1,"hobbie")
+    p2 = Prestamo(1211,c1,"universitario")
+    m1 = Multa(c1)
+    m2 = Multa(c1,1231213)
+    c1.getPrestamos().append(p1)
+    c1.getPrestamos().append(p2)
+    c1.getMultas().append(m1)
+    c1.getMultas().append(m2)
+
+
 if __name__ == "__main__":
     
     cliente = Cliente("Jaimito", 20192121)
+    crearObjetos(cliente)
     while True:
         print("""Bienvenido a PiggyBank\n¿Qué operación desea realizar?'\n
         1. Solicitar Prestamo
@@ -53,7 +80,7 @@ if __name__ == "__main__":
             UIPrestamo.prestamo(cliente)
         elif opcion == 2:
             from uiPago import UIPago
-            UIPago.pago(cliente)
+            UIPago.Pagar(cliente)
         elif opcion == 3:
             #UIBolsillos.bolsillo(cliente)
             pass
@@ -66,3 +93,4 @@ if __name__ == "__main__":
             break
         else:
             print("Por favor ingrese una opción valida")
+

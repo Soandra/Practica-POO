@@ -1,5 +1,5 @@
-import datetime
-
+from datetime import datetime as dt
+from datetime import timedelta
 from cuentaAhorro import CuentaAhorro
 
 
@@ -7,7 +7,7 @@ class Prestamo:
     TOPEMAX = 7000000
     TOPEMIN = 500000
 
-    def __init__(self, valor, cuenta, tipoPrestamo, fechaPrestamo=None): 
+    def __init__(self, valor, cuenta, tipoPrestamo, fechaPrestamo=dt.now().strftime("%d/%m/%Y")): 
         self.cuenta = cuenta
         self.valor = valor
         self.tipoPrestamo = tipoPrestamo
@@ -18,13 +18,9 @@ class Prestamo:
         self.valorCuota = 0
         self.estado = True
         self.generarPrestamo(valor, tipoPrestamo)
+        self.fechaPrestamo = fechaPrestamo
+        self.fechaPago = (dt.strptime(self.fechaPrestamo,"%d/%m/%Y") + timedelta(days=30)).strftime("%d/%m/%Y")
 
-        if fechaPrestamo == None:
-            self.fechaPrestamo = datetime.datetime.utcnow()
-            self.fechaPago = self.fechaPrestamo - datetime.timedelta(days=30)
-        else:
-            self.fechaPrestamo = fechaPrestamo
-            self.fechaPago = self.fechaPrestamo - datetime.timedelta(days=30)
 
     def generarPrestamo(self, valorPrestamo, tipoPrestamo):
         if tipoPrestamo == "universitario":
@@ -34,7 +30,7 @@ class Prestamo:
         elif tipoPrestamo == "libre":
             self.interes == 0.1
         else:
-            print("El tipo de prestamo ingresado no existe. Por favor ingrese un tipo de prestamo válido (universitario, hobbie, libre)")
+            return "El tipo de prestamo ingresado no existe. Por favor ingrese un tipo de prestamo válido (universitario, hobbie, libre)"
 
         valorTotalPrestamo = valorPrestamo + valorPrestamo * self.interes
         self.cuenta.setDeuda(valorTotalPrestamo + self.cuenta.getDeuda())

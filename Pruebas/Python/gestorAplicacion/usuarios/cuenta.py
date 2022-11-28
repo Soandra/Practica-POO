@@ -69,7 +69,7 @@ class Cuenta:
     def setMisBolsillos(self, misBolsillos):
         self.misBolsillos = misBolsillos
 
-    def getEstado(self):
+    def isEstado(self):
         return self.estado
 
     def setEstado(self, estado):

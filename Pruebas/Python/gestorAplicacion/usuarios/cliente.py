@@ -43,14 +43,14 @@ class Cliente:
 
     @classmethod
     def buscarMulta(cls,idCuenta, idMulta):
-        cuenta = Cliente.buscarCuenta(idCuenta)
-        return cuenta.getMultas().get(idMulta)
+        cuenta = Cliente.buscarCuenta(cls, idCuenta)
+        return cuenta.getMultas()[idMulta]
 
 
     @classmethod
     def buscarPrestamo(cls, idCuenta, idPrestamo):
-        cuenta = Cliente.buscarCuenta(idCuenta)
-        return cuenta.getPrestamos().get(idPrestamo)
+        cuenta = Cliente.buscarCuenta(cls, idCuenta)
+        return cuenta.getPrestamos()[idPrestamo]
 
     
     def hacerTransferencia(self, idCuentaOrigen, idCuentaDestino, valor):
@@ -86,20 +86,20 @@ class Cliente:
 
     def hacerPagoPrestamo(self, idCuenta, idPrestamo, cuota=None):   
         if cuota == None:
-            pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota()), Cliente.buscarCuenta(idCuenta),
+            pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota()), Cliente.buscarCuenta(self, idCuenta),
                         Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
             return pago.RealizarPagoPrestamo()
         else:
-            pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota() * cuota), Cliente.buscarCuenta(idCuenta), Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
+            pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota() * cuota), Cliente.buscarCuenta(self, idCuenta), Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
             return pago.RealizarPagoPrestamo(cuota)#cambiarnombre en pago
 
 
     def hacerPagoMulta(self, idCuenta, idMulta, monto=None):   
         if monto == None:
-            pago = Pago(monto, Cliente.buscarCuenta(idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
+            pago = Pago(monto, Cliente.buscarCuenta(self, idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
             return pago.realizarPagoMulta(Cliente.buscarMulta(idCuenta, idMulta))  # cambiarnombre en pago
         else:
-            pago = Pago(monto, Cliente.buscarCuenta(idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
+            pago = Pago(monto, Cliente.buscarCuenta(self, idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
             return pago.realizarPagoMulta(Cliente.buscarMulta(idCuenta, idMulta), monto)#cambiarnombre en pago
 
 
