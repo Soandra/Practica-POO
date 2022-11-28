@@ -22,5 +22,5 @@ class UIPrestamo:
                 return
 
             cliente.solicitarPrestamo(valor, tipoPrestamo, opcion)
-            prestamos = Cliente.listaCuentas.get(opcion).getprestamos() #organizar
-            print(prestamos.get(len(prestamos) - 1).mensajePrestamo())
+            prestamos = Cliente.listaCuentas[opcion-1].getPrestamos() #organizar
+            print(prestamos[opcion - 1].mensajePrestamo())

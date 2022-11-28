@@ -118,18 +118,18 @@ class Prestamo:
 
     def mensajePrestamo(self):
         return f"Ha sido aprobado tu prestamo \
-               con un valor de {self.valorPrestamo} \
-               en la fecha \
-               De tipo {self.tipoPrestamo} \
-               con una tasa de interes del {self.interes}, \
-               fue desembolsado en la cuenta {self.cuenta.getNumero()}\
-               La cuota a pagar será de {self.valorCuota} \
-               para una deuda total de {self.cuenta.getDeuda()}"
+               \ncon un valor de {self.valorPrestamo} \
+               \nen la fecha \
+               \nDe tipo {self.tipoPrestamo} \
+               \ncon una tasa de interes del {self.interes}, \
+               \nfue desembolsado en la cuenta {self.cuenta.getNumero()}\
+               \nLa cuota a pagar será de {self.valorCuota} \
+               \npara una deuda total de {self.cuenta.getDeuda()}"
 
     def __str__(self):
         return f"{self.getId()}: Prestamo con una deuda pendiente de {self.cuenta.getDeuda()} de tipo {self.tipoPrestamo}. La cuota a pagar es {self.valorCuota}" 
         
-cuenta = CuentaAhorro("Sofia", 2000, "Ahorro")
+'''cuenta = CuentaAhorro("Sofia", 2000, "Ahorro")
 prestamo = Prestamo(500000, cuenta, "universitario")
 print(prestamo)
-print(cuenta.deuda)
+print(cuenta.deuda)'''
