@@ -90,7 +90,8 @@ if __name__ == "__main__":
             UIBolsillos.bolsillo(cliente)
             pass
         elif opcion == 4:
-            pass
+            from UITranferencia import UITranferencia
+            UITranferencia.trasnfer(cliente)
         elif opcion == 5:
             from UIMovimiento import UIMovimiento
             UIMovimiento.movimiento(cliente)

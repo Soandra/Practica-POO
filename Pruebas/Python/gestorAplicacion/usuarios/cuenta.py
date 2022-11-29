@@ -25,7 +25,7 @@ class Cuenta:
 
 
     def disminuirSaldo(self, cantidad):
-        if self.estado and (self.getSaldoDisponibles() >= cantidad):
+        if self.estado and (self.getSaldoDisponible() >= cantidad):
             self.setSaldoTotal(self.getSaldoTotal() - cantidad)
 
 

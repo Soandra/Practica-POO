@@ -11,7 +11,7 @@ class Transferencia:
 		self.cuentaOrigen = cuentaOrigen
 		self.cuentaFinal = cuentaFinal
 		self.valor = valor
-		Transferencia.id = 1000 + random.randint()
+		Transferencia.id = 1000 + random.randint(1,100)
 		Transferencia.lista.append(self)
 		self.enviarDinero()
 		Movimiento(self.cuentaOrigen,self,self.valor,"Transferencia",dt.now().strftime("%d/%m/%Y"))
@@ -29,7 +29,7 @@ class Transferencia:
 		self.cuentaFinal.aumentarSaldo(self.valor)
 		self.cuentaOrigen.setSaldoDisponible(self.cuentaOrigen.getSaldoDisponible() - self.valor)
 		self.cuentaFinal.setSaldoDisponible(self.cuentaFinal.getSaldoDisponible() + self.valor)
-		return "Su transferencia fue exitosa con un valor de:"+self.valor
+		return f"La transferencia por un valor de {self.getValor()} fue exitosa."
 	
 	def __str__(self) :
 		return  f"Transferencia {self.getId()}:\

@@ -11,7 +11,7 @@ class UITranferencia:
         print("Ingrese el numero de cuenta destino")
         cDestino = int(input())
 
-        if cOrigen >= 0 and cOrigen < len(Cliente.listaCuentas) and cDestino < len(Cliente.listaCuentas()):
+        if cOrigen >= 0 and cOrigen < len(Cliente.listaCuentas) and cDestino < len(Cliente.listaCuentas):
             print("Ingrese valor a transferir")
             valor = int(input())
-            print(cliente.hacerTransferencia(cliente, cOrigen, cDestino, valor))
+            print(cliente.hacerTransferencia(cOrigen, cDestino, valor))
