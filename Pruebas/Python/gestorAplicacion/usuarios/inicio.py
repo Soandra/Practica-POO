@@ -5,6 +5,7 @@ from cliente import Cliente
 from movimiento import Movimiento
 import os
 import pathlib
+from bolsillo import Bolsillo
 
 path= os.path.join(pathlib.Path(__file__).parent.absolute())
 cliente1=Cliente("santiago",1201823)
@@ -170,9 +171,44 @@ class ventanaMenu(Tk):
             def generarAhorro(evento):
                 self.informacion=self.datos.aceptar()
                 id=(self.datos.userEntry[0]).strip().split(" ")
-                cliente1.generarAhorro(int(self.datos.userEntry[2]),int(self.datos.userEntry[1]),int(id[5]))
+                categoria = self.datos.userEntry[1]
+                cliente1.generarAhorro(int(self.datos.userEntry[2]),Bolsillo.CATEGORIA.index(categoria),int(id[5]))
                 messagebox.showinfo("informacion del bolsillo",cliente1.buscarCuenta(int(id[5])).misBolsillos[-1].mensajeBolsillo())
             self.datos.acceptButton.bind('<Button-1>',generarAhorro)
+
+        def Cargarbolsillo():
+            self.titulo.config(text="Cargar Bolsillo")
+            self.descripcion.config(text="Descripcion del Bolsillo")
+            self.datos=FieldFrame("Información",["Cuenta"],"Datos",[],[])
+            def selectBolsillo(evento):
+                self.informacion=self.datos.aceptar()
+                idCuenta=(self.datos.userEntry[0]).strip().split(" ")[5]
+                FieldFrame.Metodoaux(int(idCuenta))
+                self.datos=FieldFrame("Información", ["Bolsillo","Valor"],"Datos",[],[])
+                def numBolsillo(evento):
+                    self.informacion=self.datos.aceptar()
+                    idBolsillo=(self.datos.userEntry[0]).strip().split(" ")[1][0]
+
+                    messagebox.showinfo("informacion del Bolsillo",cliente1.cargarAhorro(int(idCuenta),int(idBolsillo),int(self.datos.userEntry[1])))
+                self.datos.acceptButton.bind('<Button-1>',numBolsillo)
+            self.datos.acceptButton.bind('<Button-1>',selectBolsillo)
+
+        def Descargarbolsillo():
+            self.titulo.config(text="Cargar Bolsillo")
+            self.descripcion.config(text="Descripcion del Bolsillo")
+            self.datos=FieldFrame("Información",["Cuenta"],"Datos",[],[])
+            def selectBolsillo(evento):
+                self.informacion=self.datos.aceptar()
+                idCuenta=(self.datos.userEntry[0]).strip().split(" ")[5]
+                FieldFrame.Metodoaux(int(idCuenta))
+                self.datos=FieldFrame("Información", ["Bolsillo","Valor"],"Datos",[],[])
+                def numBolsillo(evento):
+                    self.informacion=self.datos.aceptar()
+                    idBolsillo=(self.datos.userEntry[0]).strip().split(" ")[1][0]
+
+                    messagebox.showinfo("informacion del Bolsillo",cliente1.descargarAhorro(int(idCuenta),int(idBolsillo),int(self.datos.userEntry[1])))
+                self.datos.acceptButton.bind('<Button-1>',numBolsillo)
+            self.datos.acceptButton.bind('<Button-1>',selectBolsillo)
 
         
         def transferencia():
@@ -193,12 +229,51 @@ class ventanaMenu(Tk):
             self.titulo.config(text="Movimientos")
             self.descripcion.config(text="Descripcion del movimiento")
             self.datos=FieldFrame("Información",["Cuenta","Tipo Movimiento"],"Datos",[],[])
+            
+
+                
 
 
-        def pago():
+        def pagoPrestamo():
+            
             self.titulo.config(text="Pago")
-            self.descripcion.config(text="Descripcion del pago")
-            self.datos=FieldFrame("Información",["Cuenta origen","Tipo de pago","Valor pago"],"Datos",[],[])
+            self.descripcion.config(text="realiza ya tu pago de prestamo, ¿que esperas!\nPaga hasta 24 cuotas!")
+            self.datos=FieldFrame("Información",["Cuenta origen"],"Datos",[],[])
+            def selectPrestamo(evento):
+                self.informacion=self.datos.aceptar()
+                idCuenta=(self.datos.userEntry[0]).strip().split(" ")[5]
+                FieldFrame.Metodoaux(int(idCuenta))
+                #cliente1.solicitarPrestamo(924723,"libre",int(idCuenta))
+
+                self.datos=FieldFrame("Información", ["Prestamo","Cuotas de pago"],"Datos",[],[])
+                def numPrestamo(evento):
+                    self.informacion=self.datos.aceptar()
+                    idPrestamo=(self.datos.userEntry[0]).strip().split(":")[0]
+
+                    messagebox.showinfo("informacion del Pago",cliente1.hacerPagoPrestamo(int(idCuenta),int(idPrestamo),int(self.datos.userEntry[1])))
+                self.datos.acceptButton.bind('<Button-1>',numPrestamo)
+            self.datos.acceptButton.bind('<Button-1>',selectPrestamo)
+            
+        
+        def pagoMulta():
+            
+            self.titulo.config(text="Pago")
+            self.descripcion.config(text="realiza ya tu pago de multa, ¿que esperas!")
+                
+            self.datos=FieldFrame("Información",["Cuenta origen"],"Datos",[],[])
+            def selectMulta(evento):
+                self.informacion=self.datos.aceptar()
+                idCuenta=(self.datos.userEntry[0]).strip().split(" ")[5]
+                FieldFrame.Metodoaux(int(idCuenta))
+                self.datos=FieldFrame("Información", ["Multa","Cuotas de pago"],"Datos",[],[])
+                def numMulta(evento):
+                    self.informacion=self.datos.aceptar()
+                    idMulta=(self.datos.userEntry[0]).strip().split(":")[0]
+
+                    messagebox.showinfo("informacion del Pago",cliente1.hacerPagoMulta(int(idCuenta),int(idMulta),int(self.datos.userEntry[1])))
+                self.datos.acceptButton.bind('<Button-1>',numMulta)
+            self.datos.acceptButton.bind('<Button-1>',selectMulta)
+    
         
         def aplicacioninfo():
             messagebox.showinfo("Piggy Bank","Una aplicacion bancaria dedicada al manejo de finanzas, podras realizar prestamos, generar pagos, realizar transferencias, generar bolsillos y verificar los movimientos realizados en cada operación")
@@ -210,6 +285,8 @@ class ventanaMenu(Tk):
         self.titulo.place(relwidth=1,rely=0.03)
         self.descripcion=Label(self,font=("Arial",20))
         self.descripcion.place(relwidth=1,rely=0.2,relheight=0.20)
+
+        
         self.menuBar = Menu(self)
         self.config(menu=self.menuBar)
         menuArchivo = Menu(self.menuBar,activebackground="blue",activeforeground="white")
@@ -218,14 +295,29 @@ class ventanaMenu(Tk):
         menuArchivo.add_command(label="Salir",command=self.volver)
         menuProcesos=Menu(self.menuBar)
         self.menuBar.add_cascade(label="Procesos y Consultas",menu=menuProcesos)
+
+        #Manu Prestamos
         menuProcesos.add_command(label="Prestamo",command=prestamo)
-        menuProcesos.add_command(label="Bolsillos",command=bolsillos)
+
+        #Menu Bolsillos
+        menuBolsillos=Menu(self.menuBar)
+        menuProcesos.add_cascade(label="Bolsillos",menu=menuBolsillos)
+        menuBolsillos.add_command(label="Generar Bolsillo",command=bolsillos)
+        menuBolsillos.add_command(label="Cargar Bolsillo",command=Cargarbolsillo)
+        menuBolsillos.add_command(label="Descargar Bolsillo",command=Descargarbolsillo)
+
+        #Menu Transferencias
         menuProcesos.add_command(label="Transferencia",command=transferencia)
+
+        #Menu Movimientos
         menuProcesos.add_command(label="Movimientos",command=movimientos)
+
+        #menuPagos
         menuPagos=Menu(self.menuBar)
-        menuProcesos.add_cascade(label="Pagos",command=pago,menu=menuPagos)
-        menuPagos.add_command(label="Pago Prestamo")
-        menuPagos.add_command(label="Pago multa",)
+        menuProcesos.add_cascade(label="Pagos",menu=menuPagos)
+        menuPagos.add_command(label="Pago Prestamo",command=pagoPrestamo)
+        menuPagos.add_command(label="Pago multa",command=pagoMulta)
+
         menuAyuda=Menu(self.menuBar)
         self.menuBar.add_cascade(label="Ayuda",menu=menuAyuda)
         menuAyuda.add_command(label="Acerca de",command=acercaDeInfo)

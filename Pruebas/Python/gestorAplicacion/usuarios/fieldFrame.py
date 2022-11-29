@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 from cliente import Cliente
+from bolsillo import Bolsillo
 
 
 class FieldFrame(Frame):
+    aux = []
     def __init__(self,tituloCriterios, criterios,tituloValores,valores,habilitado):
         super().__init__()
         self.labelList=[]
@@ -17,6 +19,7 @@ class FieldFrame(Frame):
         fila=1
         for i in range (len(criterios)):
             if criterios[i] =="Cuenta" or criterios[i]=="Cuenta origen" or criterios[i]=="Cuenta destino":
+                
                 title=Label(self,text=criterios[i],font=("Arial",25),justify=LEFT)
                 self.labelList.append(title)
                 title.grid(row=fila,column=0,pady=10)
@@ -24,6 +27,43 @@ class FieldFrame(Frame):
                 self.entrys.append(entrada)
                 entrada.grid(row=fila,column=1,pady=10)
                 fila+=1
+
+            elif criterios[i] =="Categoria":
+                title=Label(self,text=criterios[i],font=("Arial",25),justify=LEFT)
+                self.labelList.append(title)
+                title.grid(row=fila,column=0,pady=10)
+                entrada=ttk.Combobox(self,values=Bolsillo.CATEGORIA,font=("Arial",30))
+                self.entrys.append(entrada)
+                entrada.grid(row=fila,column=1,pady=10)
+                fila+=1
+
+            elif criterios[i] =="Bolsillo":
+                title=Label(self,text=criterios[i],font=("Arial",25),justify=LEFT)
+                self.labelList.append(title)
+                title.grid(row=fila,column=0,pady=10)
+                entrada=ttk.Combobox(self,values=Cliente.buscarCuenta(self, FieldFrame.aux[-1]).getMisBolsillos(),font=("Arial",30))
+                self.entrys.append(entrada)
+                entrada.grid(row=fila,column=1,pady=10)
+                fila+=1
+
+            elif criterios[i] =="Prestamo":
+                title=Label(self,text=criterios[i],font=("Arial",25),justify=LEFT)
+                self.labelList.append(title)
+                title.grid(row=fila,column=0,pady=10)
+                entrada=ttk.Combobox(self,values=Cliente.buscarCuenta(self, FieldFrame.aux[-1]).getPrestamos(),font=("Arial",30))
+                self.entrys.append(entrada)
+                entrada.grid(row=fila,column=1,pady=10)
+                fila+=1
+
+            elif criterios[i] =="Multa":
+                title=Label(self,text=criterios[i],font=("Arial",25),justify=LEFT)
+                self.labelList.append(title)
+                title.grid(row=fila,column=0,pady=10)
+                entrada=ttk.Combobox(self,values=Cliente.buscarCuenta(self, FieldFrame.aux[-1]).getMultas(),font=("Arial",30))
+                self.entrys.append(entrada)
+                entrada.grid(row=fila,column=1,pady=10)
+                fila+=1
+
             else:
                 title=Label(self,text=criterios[i],font=("Arial",25),justify=LEFT)
                 self.labelList.append(title)
@@ -32,14 +72,16 @@ class FieldFrame(Frame):
                 self.entrys.append(entrada)
                 entrada.grid(row=fila,column=1,pady=10)
                 fila+=1
+
         if valores!= None:
             for i in range(len(valores)):
                 self.entrys[i].insert(INSERT,valores[i])
+
         if habilitado!= None:
             for i in habilitado:
                 self.entrys[i].config(state=DISABLED)
-        #print(labelList[0].cget("text"))
 
+        #print(labelList[0].cget("text"))
         self.acceptButton = Button(self,text="Aceptar",font=("Calibri light",20),fg="#764574",bd=5,command=self.aceptar)
         self.acceptButton.grid(row=fila+1,column=0,pady=50)
         self.deleteButton = Button(self,text="Borrar",font=("Calibri light",20),fg="#764574",bd=5,command=self.borrar)
@@ -52,3 +94,8 @@ class FieldFrame(Frame):
     def borrar(self):
         for i in self.entrys:
             i.delete(0,last="end")
+    @classmethod
+    def Metodoaux(cls,opcion):
+        FieldFrame.aux.append(opcion)
+
+

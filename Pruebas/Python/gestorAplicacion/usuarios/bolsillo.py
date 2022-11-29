@@ -70,7 +70,7 @@ class Bolsillo():
             if (self.valorCargaBolsillo == 0):
                 return "Su bolsillo no cuenta con saldo"
 
-            elif (self.cuenta.misBolsillos.isEmpty() or self.valorCargaBolsillo == 0):
+            elif (len(self.cuenta.misBolsillos) == 0 or self.valorCargaBolsillo == 0):
                 return "Debe crear o cargar el bolsillo para poder descargarlo"
             Movimiento(self.cuenta,self,valor,"Desde mis bolsillos",dt.now().strftime("%d/%m/%Y"))
             self.valorCargaBolsillo -= valor
