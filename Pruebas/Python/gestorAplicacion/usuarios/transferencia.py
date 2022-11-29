@@ -18,7 +18,6 @@ class Transferencia:
 		
 
 	def enviarDinero(self):
-		
 		if (self.cuentaOrigen.isEstado()==False):
 			return "cuenta inactiva"
 			

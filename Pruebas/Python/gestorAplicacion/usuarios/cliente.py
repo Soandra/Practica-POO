@@ -22,7 +22,7 @@ class Cliente:
             Cliente.listaCuentas.append(CuentaCorriente(self, random.randint(100000, 600000), "Corriente"))
 
 
-    def buscarCuenta(cls, idCuenta):
+    def buscarCuenta(self, idCuenta):
         for cuenta in Cliente.listaCuentas:
             if idCuenta == cuenta.id:
                 return cuenta

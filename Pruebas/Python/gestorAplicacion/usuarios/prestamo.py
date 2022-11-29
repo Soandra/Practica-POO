@@ -40,7 +40,6 @@ class Prestamo:
         self.valorCuota = round(valorTotalPrestamo / self.cuotasDePago)
         self.valorPrestamo = valorPrestamo
         self.tipoPrestamo = tipoPrestamo
-        #self.cuenta.setPrestamos(cuenta.getPrestamos().append(self)) #nueva
 
     def saldarCuota(self, cantidadCuota):
         valor = self.valorCuota * cantidadCuota
