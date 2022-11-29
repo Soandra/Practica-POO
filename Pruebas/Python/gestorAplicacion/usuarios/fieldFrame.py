@@ -54,6 +54,15 @@ class FieldFrame(Frame):
                 self.entrys.append(entrada)
                 entrada.grid(row=fila,column=1,pady=10)
                 fila+=1
+            
+            elif criterios[i] =="Tipo Movimiento":
+                title=Label(self,text=criterios[i],font=("Arial",25),justify=LEFT)
+                self.labelList.append(title)
+                title.grid(row=fila,column=0,pady=10)
+                entrada=ttk.Combobox(self,values=["Transferencias","Pagos"],font=("Arial",30))
+                self.entrys.append(entrada)
+                entrada.grid(row=fila,column=1,pady=10)
+                fila+=1
 
             elif criterios[i] =="Multa":
                 title=Label(self,text=criterios[i],font=("Arial",25),justify=LEFT)

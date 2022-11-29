@@ -14,9 +14,14 @@ class UIMovimiento:
         tipo = int(input())
         print("Elija una cuenta:")
         UiMenu.traerCuentasAhorro()
-        id = int(input())
-
+        cuenta = int(input())
         if tipo == 1:
+            movPago(cuenta)
+        else:
+            movTransferencia(cuenta)
+
+
+        def movPago(id):
             movimiento = Movimiento.movimientoPago(Cliente.buscarCuenta(cliente, id))
             if len(movimiento) == 0:
                 print("Usted no cuenta con Transferencias actualmente")
@@ -26,7 +31,7 @@ class UIMovimiento:
             for i in movimiento:
                 print(i)
 
-        elif tipo == 2:
+        def movTransferencia(id):
             movimiento = Movimiento.movimientoTransferencia(Cliente.buscarCuenta(cliente, id))
             if len(movimiento) == 0:
                 print("Usted no cuenta con pagos actualmente")

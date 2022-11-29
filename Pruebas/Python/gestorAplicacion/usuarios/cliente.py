@@ -6,6 +6,7 @@ from prestamo import Prestamo
 from multa import Multa
 from pago import Pago
 from bolsillo import Bolsillo
+from movimiento import Movimiento
 
 class Cliente:
     listaCuentas = []
@@ -87,21 +88,44 @@ class Cliente:
     def hacerPagoPrestamo(self, idCuenta, idPrestamo, cuota=None):   
         if cuota == None:
             pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota()), Cliente.buscarCuenta(self, idCuenta),
-                        Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
+                        Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo")
             return pago.RealizarPagoPrestamo()
         else:
-            pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota() * cuota), Cliente.buscarCuenta(self, idCuenta), Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo");
+            pago = Pago((Cliente.buscarPrestamo(idCuenta, idPrestamo).getValorCuota() * cuota), Cliente.buscarCuenta(self, idCuenta), Cliente.buscarPrestamo(idCuenta, idPrestamo), "Prestamo")
             return pago.RealizarPagoPrestamo(cuota)#cambiarnombre en pago
 
 
     def hacerPagoMulta(self, idCuenta, idMulta, monto=None):   
         if monto == None:
-            pago = Pago(monto, Cliente.buscarCuenta(self, idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
+            pago = Pago(monto, Cliente.buscarCuenta(self, idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa")
             return pago.realizarPagoMulta(Cliente.buscarMulta(idCuenta, idMulta))  # cambiarnombre en pago
         else:
-            pago = Pago(monto, Cliente.buscarCuenta(self, idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa");
+            pago = Pago(monto, Cliente.buscarCuenta(self, idCuenta), Cliente.buscarMulta(idCuenta, idMulta), "Multa")
             return pago.realizarPagoMulta(Cliente.buscarMulta(idCuenta, idMulta), monto)#cambiarnombre en pago
 
+    def movPago(self, id):
+        movimiento = Movimiento.movimientoPago(Cliente.buscarCuenta(self, id))
+        lista = []
+        if len(movimiento) == 0:
+            return "Usted no cuenta con Transferencias actualmente"
+        if len(Cliente.buscarCuenta(self, id).misBolsillos)==0:
+                lista.append("Usted no cuenta con bolsillos actualmente")
+        for i in movimiento:
+            lista.append(i)
+        return lista
+
+    def movTransferencia(self, id):
+        movimiento = Movimiento.movimientoTransferencia(Cliente.buscarCuenta(self, id))
+        lista = []
+        if len(movimiento) == 0:
+            lista.append("Usted no cuenta con pagos actualmente")
+        if (len((Cliente.buscarCuenta(self, id).getPrestamos())) == 0) :
+            lista.append("Usted no cuenta con prestamos actualmente")
+        if (((Cliente.buscarCuenta(self, id).getMultas())) == 0) :
+            lista.append("Usted no tiene multas actualmente")
+        for i in movimiento:
+            lista.append(i)
+        return lista
 
     #Getters y setters
     @classmethod

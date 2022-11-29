@@ -165,7 +165,7 @@ class ventanaMenu(Tk):
         
         def bolsillos():
             self.titulo.config(text="Bolsillo")
-            self.descripcion.config(text="Descripcion del Bolsillo")
+            self.descripcion.config(text="Creatu Bolsillo con 3 sencillos pasos")
             self.datos=FieldFrame("Información",["Cuenta","Categoria","Meta de ahorro"],"Datos",[],[])
 
             def generarAhorro(evento):
@@ -178,7 +178,7 @@ class ventanaMenu(Tk):
 
         def Cargarbolsillo():
             self.titulo.config(text="Cargar Bolsillo")
-            self.descripcion.config(text="Descripcion del Bolsillo")
+            self.descripcion.config(text="Ya tienes tu bolsillo creado?\nPues empieza a ahorrar")
             self.datos=FieldFrame("Información",["Cuenta"],"Datos",[],[])
             def selectBolsillo(evento):
                 self.informacion=self.datos.aceptar()
@@ -194,8 +194,8 @@ class ventanaMenu(Tk):
             self.datos.acceptButton.bind('<Button-1>',selectBolsillo)
 
         def Descargarbolsillo():
-            self.titulo.config(text="Cargar Bolsillo")
-            self.descripcion.config(text="Descripcion del Bolsillo")
+            self.titulo.config(text="Descargar Bolsillo")
+            self.descripcion.config(text="puedes descargar tu bolsillo al toque mi rey") 
             self.datos=FieldFrame("Información",["Cuenta"],"Datos",[],[])
             def selectBolsillo(evento):
                 self.informacion=self.datos.aceptar()
@@ -213,7 +213,7 @@ class ventanaMenu(Tk):
         
         def transferencia():
             self.titulo.config(text="Transferencia")
-            self.descripcion.config(text="Descripcion del Transferencia")
+            self.descripcion.config(text="Transferencias entre tus cuentas\nPuedes ahora interactuar entre tus saldos")
             self.datos=FieldFrame("Información",["Cuenta origen","Cuenta destino","Valor transferencia"],"Datos",[],[])
 
             def trasferir(evento):
@@ -227,11 +227,23 @@ class ventanaMenu(Tk):
 
         def movimientos():
             self.titulo.config(text="Movimientos")
-            self.descripcion.config(text="Descripcion del movimiento")
+            self.descripcion.config(text="Resvisa tu historial de Movimientos\nLLeva un control de todo lo que haz hecho en tu cuenta")
             self.datos=FieldFrame("Información",["Cuenta","Tipo Movimiento"],"Datos",[],[])
-            
+            def movimiento(evento):
+                self.informacion=self.datos.aceptar()
+                idCuenta=(self.datos.userEntry[0]).strip().split(" ")[5]
+                metodo = (self.datos.userEntry[1]).strip()
+                if metodo == "Transferencias":
+                    lista = Cliente.movimientoTransferencia(idCuenta)
+                    print (lista)
+                    messagebox.showinfo("Información de las transferencias",)
+    
+                else:
+                    lista = Cliente.movPago(idCuenta)
+                    print(lista)
 
-                
+                    messagebox.showinfo("Información de los Pagos",)
+            self.datos.acceptButton.bind('<Button-1>',movimiento)
 
 
         def pagoPrestamo():
@@ -258,7 +270,7 @@ class ventanaMenu(Tk):
         def pagoMulta():
             
             self.titulo.config(text="Pago")
-            self.descripcion.config(text="realiza ya tu pago de multa, ¿que esperas!")
+            self.descripcion.config(text="realiza ya tu pago de multa\n¿que esperas!")
                 
             self.datos=FieldFrame("Información",["Cuenta origen"],"Datos",[],[])
             def selectMulta(evento):
