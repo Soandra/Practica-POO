@@ -40,9 +40,7 @@ class UIBolsillos:
                 print("Selecciona el bolsillo al cual deseas ingresar un monto")
                 UiMenu.traerBolsillos(cuenta)
                 op1 = int(input())
-                if op1 > len(cliente.buscarCuenta(op1).getMisBolsillos()) or bool(cliente.buscarCuenta( op1).getMisBolsillos()):
-                    print("El bolsillo no existe")
-                    return
+                print(Cliente.buscarCuenta(cls, cuenta).getMisBolsillos())
                     
                 print("1.Carga completa")
                 print("2.Carga parcial")

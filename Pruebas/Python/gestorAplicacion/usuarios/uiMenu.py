@@ -2,6 +2,7 @@ from cliente import Cliente
 from prestamo import Prestamo
 from multa import Multa
 from cuentaAhorro import CuentaAhorro
+from bolsillo import Bolsillo
 
 
 class UiMenu:
@@ -47,6 +48,7 @@ def crearObjetos(cliente):
     #(self, valor, cuenta, tipoPrestamo, fechaPrestamo=None)
     #(self, cuenta= None, monto = 50000, fecha = dt.now().strftime("%d/%m/%Y")):
     #(self, titular, saldo, tipoCuenta)
+    #(self, metaAhorro,opcion, cuenta)
     c1= CuentaAhorro(cliente, 23484578, "Ahorro")
     cliente.getListaCuentas().append(c1)
     p1 = Prestamo(12311,c1,"hobbie")
@@ -57,6 +59,8 @@ def crearObjetos(cliente):
     c1.getPrestamos().append(p2)
     c1.getMultas().append(m1)
     c1.getMultas().append(m2)
+    b1 = Bolsillo(1231, 0, c1)
+    c1.getMisBolsillos().append(b1)
 
 
 if __name__ == "__main__":

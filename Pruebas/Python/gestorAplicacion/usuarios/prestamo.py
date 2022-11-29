@@ -115,7 +115,7 @@ class Prestamo:
     def mensajePrestamo(self):
         return f"Ha sido aprobado tu prestamo \
                \ncon un valor de {self.valorPrestamo} \
-               \nen la fecha \
+               \nen la fecha {self.fechaPrestamo}\
                \nDe tipo {self.tipoPrestamo} \
                \ncon una tasa de interes del {self.interes}, \
                \nfue desembolsado en la cuenta {self.cuenta.getNumero()}\
