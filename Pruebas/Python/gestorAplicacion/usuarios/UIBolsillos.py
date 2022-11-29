@@ -39,9 +39,7 @@ class UIBolsillos:
             elif opcionBolsillos == 2:
                 print("Selecciona el bolsillo al cual deseas ingresar un monto")
                 UiMenu.traerBolsillos(cuenta)
-                op1 = int(input())
-                print(Cliente.buscarCuenta(cls, cuenta).getMisBolsillos())
-                    
+                op1 = int(input())   
                 print("1.Carga completa")
                 print("2.Carga parcial")
                 opcion1 = int(input())

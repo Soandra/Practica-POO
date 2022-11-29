@@ -1,4 +1,5 @@
 from datetime import datetime as dt
+from movimiento import Movimiento
 import random 
 
 class Transferencia:
@@ -12,7 +13,9 @@ class Transferencia:
 		self.valor = valor
 		Transferencia.id = 1000 + random.randint()
 		Transferencia.lista.append(self)
-		pass
+		self.enviarDinero()
+		Movimiento(self.cuentaOrigen,self,self.valor,"Transferencia",dt.now().strftime("%d/%m/%Y"))
+		
 
 	def enviarDinero(self):
 		

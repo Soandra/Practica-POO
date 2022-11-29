@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 from multa import Multa
+from movimiento import Movimiento
 
 class Pago:
     pagos = []
@@ -26,13 +27,17 @@ class Pago:
         
         if monto is None: #Pago total
             multa.pagarMulta()
+            Movimiento(self.cuenta,self,multa.getMonto(),"Pago de multa",dt.now().strftime("%d/%m/%Y"))
             return f"su multa fue pagada con exito\nEste es su nuevo Saldo: {multa.getCuenta().getSaldoDisponible()}"
             
+            
         if (self.cuenta.getSaldoDisponible()< monto):
+            
             return "Saldo insuficiente"
 
         else:
             multa.pagarMulta(monto)
+            Movimiento(self.cuenta,self,monto,"Pago de multa",dt.now().strftime("%d/%m/%Y"))
             return f"Este es su nuevo monto: {multa.getMonto()}" #Pago parcial
     
 
@@ -42,7 +47,6 @@ class Pago:
     '''
     def RealizarPagoPrestamo(self,cuotas=None): #opcion 1 para pagar un prestamo (pago total del prestamo)
         Multa.moraPrestamo(self, self, self.cuenta, self.multaOPrestamo)
-
         if(not self.cuenta.isEstado()):
             return "Su cuenta está bloqueada"
 
@@ -53,6 +57,8 @@ class Pago:
             return "Saldo insuficiente"
 
         if cuotas is None: #Pago total
+            Movimiento(self.cuenta,self,self.multaOPrestamo.getValorPrestamo(),"Pago de prestamo",dt.now().strftime("%d/%m/%Y"))
+
             self.multaOPrestamo.saldarPrestamo()
             return f"Su deuda ha sido saldada\nNuevo saldo: {self.cuenta.getSaldoDisponible()}"
 
@@ -61,10 +67,12 @@ class Pago:
 
         #pago parcial
         if (cuotas == self.multaOPrestamo.cuotasDePago):
+            Movimiento(self.cuenta,self,self.multaOPrestamo.getValorPrestamo(),"Pago de prestamo",dt.now().strftime("%d/%m/%Y"))
             self.multaOPrestamo.saldarPrestamo()
             return f"Su deuda ha sido saldada\nNuevo saldo: {self.cuenta.getSaldoDisponible()}"
 
         else:
+            Movimiento(self.cuenta,self,self.multaOPrestamo.getValorCuota(),"Pago de prestamo",dt.now().strftime("%d/%m/%Y"))
             self.multaOPrestamo.saldarCuota(cuotas)
             return f"Nuevo saldo: {self.cuenta.getSaldoDisponible()} \
             \nDeuda actual: {self.cuenta.getDeuda()} \

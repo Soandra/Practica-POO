@@ -92,7 +92,8 @@ if __name__ == "__main__":
         elif opcion == 4:
             pass
         elif opcion == 5:
-            pass
+            from UIMovimiento import UIMovimiento
+            UIMovimiento.movimiento(cliente)
         elif opcion == 6:
             print("Vuelva pronto")
             break

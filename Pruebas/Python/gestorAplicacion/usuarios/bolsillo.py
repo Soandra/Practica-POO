@@ -1,3 +1,5 @@
+from movimiento import Movimiento
+from datetime import datetime as dt
 
 class Bolsillo():
     CATEGORIA = ["VIAJES", "EDUCACION", "SALUD", "ALIMENTACION", "TRANSPORTE", "HOGAR", "IMPREVISTOS", "OTROS"]
@@ -30,6 +32,7 @@ class Bolsillo():
 
             self.valorCargaBolsillo = self.metaAhorro
             self.cuenta.setSaldoDisponible(self.cuenta.getSaldoTotal() - self.cuenta.saldoEnBolsillos())
+            Movimiento(self.cuenta,self,self.metaAhorro,"Hacia mis bolsillos",dt.now().strftime("%d/%m/%Y"))
             return "Felicitaciones, alcanzaste tu meta de ahorro"
 
         else:
@@ -46,11 +49,13 @@ class Bolsillo():
                 return "Verifica tu saldo en el bolsillo, es posible que excedas el valor posible a recargar "
 
             self.valorCargaBolsillo += valor
+            Movimiento(self.cuenta,self,valor,"Hacia mis bolsillos",dt.now().strftime("%d/%m/%Y"))
             self.cuenta.setSaldoDisponible(self.cuenta.getSaldoTotal() - self.cuenta.saldoEnBolsillos())
             return f"El bolsillo fue cargado con {self.getValorCargaBolsillo()}"
 
 
     def descargarBolsillo(self, valor=None):
+        
         if valor == None:
             if (len(self.cuenta.misBolsillos) == 0 or self.valorCargaBolsillo == 0):
                 return "Debe crear o cargar el bolsillo para poder descargarlo"
@@ -59,6 +64,7 @@ class Bolsillo():
             self.cuenta.setSaldoDisponible(self.cuenta.getSaldoTotal())
             self.valorCargaBolsillo -= self.valorCargaBolsillo
             self.cuenta.misBolsillos.set(self.cuenta.misBolsillos.indexOf(self), self)
+            Movimiento(self.cuenta,self,self.valorCargaBolsillo,"Desde mis bolsillos",dt.now().strftime("%d/%m/%Y"))
             return "Se ha descargado el bolsillo completamente."
         else:
             if (self.valorCargaBolsillo == 0):
@@ -66,7 +72,7 @@ class Bolsillo():
 
             elif (self.cuenta.misBolsillos.isEmpty() or self.valorCargaBolsillo == 0):
                 return "Debe crear o cargar el bolsillo para poder descargarlo"
-
+            Movimiento(self.cuenta,self,valor,"Desde mis bolsillos",dt.now().strftime("%d/%m/%Y"))
             self.valorCargaBolsillo -= valor
             self.cuenta.setSaldoTotal(self.cuenta.getSaldoDisponible() + self.cuenta.saldoEnBolsillos())
             return f"Se ha descargado el valor del bolsillo a tu cuenta, quedas con un saldo de ahorro de: {self.getValorCargaBolsillo()}"

@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 from datetime import timedelta
-from cuentaAhorro import CuentaAhorro
+from movimiento import Movimiento
 
 
 class Prestamo:
@@ -32,6 +32,7 @@ class Prestamo:
         else:
             return "El tipo de prestamo ingresado no existe. Por favor ingrese un tipo de prestamo válido (universitario, hobbie, libre)"
 
+        Movimiento(self.cuenta,self,valorPrestamo,"Prestamo",dt.now().strftime("%d/%m/%Y"))
         valorTotalPrestamo = valorPrestamo + valorPrestamo * self.interes
         self.cuenta.setDeuda(valorTotalPrestamo + self.cuenta.getDeuda())
         self.cuenta.setSaldoTotal(self.cuenta.getSaldoTotal() + valorPrestamo)

@@ -1,30 +1,40 @@
 from cliente import Cliente
 from uiMenu import UiMenu
+from movimiento import Movimiento
 
 class UIMovimiento:
 
     @classmethod
     def movimiento(cls, cliente):
         print("""Elija el tipo de transaccion
-        1. Ver todas tus transacciones disponibles
-        2. Ver transferencias realizadas
-        3. Ver Pagos realizados  
+        1. Ver Pagos realizadas
+        2. Ver transferencias realizados  
         """)
 
         tipo = int(input())
+        print("Elija una cuenta:")
+        UiMenu.traerCuentasAhorro()
+        id = int(input())
+
         if tipo == 1:
-            print("Elija una cuenta:")
-            UiMenu.traerCuentasAhorro()
-            id = int(input())
-            if id >= 0 and id <= len(Cliente.listaCuentas):
-                print("Estas son tus transacciones disponibles")
-                UiMenu.traerPrestamos(id)
-                UiMenu.traerMultas(id)
-                UiMenu.traerBolsillos(id)
+            movimiento = Movimiento.movimientoPago(Cliente.buscarCuenta(cliente, id))
+            if len(movimiento) == 0:
+                print("Usted no cuenta con Transferencias actualmente")
+                return 
+            if len(Cliente.buscarCuenta(cls, id).misBolsillos)==0:
+                    print("Usted no cuenta con bolsillos actualmente")
+            for i in movimiento:
+                print(i)
 
         elif tipo == 2:
-            print("Transferencias Realizadas:") #No está definida en cliente
-            print(cliente.movimientoTransferencia())
-        elif tipo == 3:
-            print("Pagos realizados: ")
-            print(cliente.movimientoPago) #No está definida en cliente
+            movimiento = Movimiento.movimientoTransferencia(Cliente.buscarCuenta(cliente, id))
+            if len(movimiento) == 0:
+                print("Usted no cuenta con pagos actualmente")
+                return
+            if (len((Cliente.buscarCuenta(cliente, id).getPrestamos())) == 0) :
+                print("Usted no cuenta con prestamos actualmente")
+            if (((Cliente.buscarCuenta(cls, id).getMultas())) == 0) :
+                print("Usted no tiene multas actualmente")
+            for i in movimiento:
+                print(i)
+                
